@@ -1,0 +1,14 @@
+I:\srouce\DailyDish\DailyDish.DB\bin\Debug\DailyDish.DB.dll.config
+I:\srouce\DailyDish\DailyDish.DB\bin\Debug\DailyDish.DB.dll
+I:\srouce\DailyDish\DailyDish.DB\bin\Debug\DailyDish.DB.pdb
+I:\srouce\DailyDish\DailyDish.DB\bin\Debug\EntityFramework.dll
+I:\srouce\DailyDish\DailyDish.DB\bin\Debug\EntityFramework.SqlServer.dll
+I:\srouce\DailyDish\DailyDish.DB\bin\Debug\System.Data.SQLite.dll
+I:\srouce\DailyDish\DailyDish.DB\bin\Debug\System.Data.SQLite.EF6.dll
+I:\srouce\DailyDish\DailyDish.DB\bin\Debug\System.Data.SQLite.Linq.dll
+I:\srouce\DailyDish\DailyDish.DB\bin\Debug\EntityFramework.xml
+I:\srouce\DailyDish\DailyDish.DB\bin\Debug\EntityFramework.SqlServer.xml
+I:\srouce\DailyDish\DailyDish.DB\bin\Debug\System.Data.SQLite.xml
+I:\srouce\DailyDish\DailyDish.DB\obj\Debug\DailyDish.DB.csprojResolveAssemblyReference.cache
+I:\srouce\DailyDish\DailyDish.DB\obj\Debug\DailyDish.DB.dll
+I:\srouce\DailyDish\DailyDish.DB\obj\Debug\DailyDish.DB.pdb
