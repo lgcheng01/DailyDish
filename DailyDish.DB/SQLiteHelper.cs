@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.SQLite;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,9 +17,13 @@ namespace DailyDish.DB
 {
     public class SQLiteHelper
     {
-        public static string connectionString = "Data Source=" + System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["SQLString"]);
+        private static string DbFile= System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["SQLString"]);
+        private static string connectionString = "Data Source=" + DbFile;
 
-        public SQLiteHelper() { }
+        public SQLiteHelper()
+        {
+            CreateDataBaseIfNotExists();
+        }
         
         public static bool Exists(string strSql)
         {
@@ -181,6 +186,31 @@ namespace DailyDish.DB
             parm.Value = value;
             return parm;
         }
-        
+
+        public void CreateDataBaseIfNotExists()
+        {
+            if (!File.Exists(DbFile))
+            {
+                CreateDatabase();
+            }
+        }
+        public static SQLiteConnection SimpleDbConnection()
+        {
+            return new SQLiteConnection("Data Source=" + DbFile);
+        }
+        private static void CreateDatabase()
+        {
+            using (var cnn = SimpleDbConnection())
+            {
+                cnn.Open();
+                ExecuteSql(
+                    @"create table UserInfo
+              (
+                 Id                                  integer identity primary key AUTOINCREMENT,
+                 OpenId                            varchar(100) not null,
+                 UserName                         varchar(100) not null,
+              )");
+            }
+        }
     }
 }
