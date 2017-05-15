@@ -22,7 +22,7 @@ namespace DailyDish.DB
         
         public static bool Exists(string strSql)
         {
-            object obj = ExcuteSql(strSql);
+            object obj = ExecuteSql(strSql);
             int cmdresult;
             if ((Object.Equals(obj, null)) || (Object.Equals(obj, System.DBNull.Value)))
             {
@@ -44,7 +44,7 @@ namespace DailyDish.DB
 
         public static bool Exists(string strSql, params SQLiteParameter[] cmdParms)
         {
-            object obj = ExcuteSql(strSql, cmdParms);
+            object obj = ExecuteSql(strSql, cmdParms);
             int cmdresult;
             if ((Object.Equals(obj, null)) || (Object.Equals(obj, System.DBNull.Value)))
             {
@@ -86,7 +86,7 @@ namespace DailyDish.DB
             }
         }
 
-        public static object ExcuteSql(string SQLString, params SQLiteParameter[] cmdParms)
+        public static int ExecuteSql(string SQLString, params SQLiteParameter[] cmdParms)
         {
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
@@ -95,26 +95,19 @@ namespace DailyDish.DB
                     try
                     {
                         PrepareCommand(cmd, connection, null, SQLString, cmdParms);
-                        object obj = cmd.ExecuteScalar();
+                        int rows = cmd.ExecuteNonQuery();
                         cmd.Parameters.Clear();
-                        if ((Object.Equals(obj, null)) || (Object.Equals(obj, System.DBNull.Value)))
-                        {
-                            return null;
-                        }
-                        else
-                        {
-                            return obj;
-                        }
+                        return rows;
                     }
-                    catch (System.Data.SQLite.SQLiteException e)
+                    catch (System.Data.SQLite.SQLiteException E)
                     {
-                        throw new Exception(e.Message);
+                        throw new Exception(E.Message);
                     }
                 }
             }
         }
 
-        
+
         public static SQLiteDataReader ExecuteReader(string SQLString, params SQLiteParameter[] cmdParms)
         {
             SQLiteConnection connection = new SQLiteConnection(connectionString);

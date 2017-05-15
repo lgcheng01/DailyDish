@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace DailyDish.DB.Entity
 {
-   public class UserInfo
+  public  class UserInfo
     {
         public string OpenId { get; set; }
+        public string UserName { get; set; }
     }
 }
