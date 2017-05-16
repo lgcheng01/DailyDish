@@ -47,7 +47,7 @@ namespace DailyDish.DB
             }
         }
 
-        public static bool Exists(string strSql, params SQLiteParameter[] cmdParms)
+        public  bool Exists(string strSql, params SQLiteParameter[] cmdParms)
         {
             object obj = ExecuteSql(strSql, cmdParms);
             int cmdresult;
@@ -91,7 +91,7 @@ namespace DailyDish.DB
             }
         }
 
-        public static int ExecuteSql(string SQLString, params SQLiteParameter[] cmdParms)
+        public  int ExecuteSql(string SQLString, params SQLiteParameter[] cmdParms)
         {
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
@@ -180,7 +180,7 @@ namespace DailyDish.DB
         }
         
         
-        public static SQLiteParameter MakeSQLiteParameter(string name, DbType type, object value)
+        public  SQLiteParameter MakeSQLiteParameter(string name, DbType type, object value)
         {
             SQLiteParameter parm = new SQLiteParameter(name, type);
             parm.Value = value;
@@ -203,13 +203,8 @@ namespace DailyDish.DB
             using (var cnn = SimpleDbConnection())
             {
                 cnn.Open();
-                ExecuteSql(
-                    @"create table UserInfo
-              (
-                 Id                                  integer identity primary key AUTOINCREMENT,
-                 OpenId                            varchar(100) not null,
-                 UserName                         varchar(100) not null,
-              )");
+                ExecuteSql("CREATE TABLE IF NOT EXISTS UserInfo('OpenId' varchar(100) not null,'UserName' varchar(100) not null)");
+                ExecuteSql("CREATE TABLE IF NOT EXISTS TasteHistory('Id' varchar(100) not null,'OpenId' varchar(100) not null,'UserName' varchar(100) not null,'LikeFlavor' varchar(100) not null,'DisLikeFlavor' varchar(100) not null)");
             }
         }
     }

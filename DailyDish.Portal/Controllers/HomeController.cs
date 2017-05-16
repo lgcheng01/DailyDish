@@ -1,4 +1,5 @@
 ﻿using DailyDish.DB;
+using DailyDish.Portal.SQLDll;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,7 +13,8 @@ namespace DailyDish.Portal.Controllers
     {
         public ActionResult Index()
         {
-           return View();
+           
+            return View();
         }
 
         
