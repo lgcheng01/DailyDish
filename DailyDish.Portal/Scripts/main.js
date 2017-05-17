@@ -1,6 +1,6 @@
-﻿$(document).ready(function(){
-    $(".container button").click(function () {
+﻿//$(document).ready(function(){
+//    $(".container button").click(function () {
         
-        $(this).toggleClass("clickBtn")
-    })
-})
+//        $(this).toggleClass("clickBtn")
+//    })
+//})

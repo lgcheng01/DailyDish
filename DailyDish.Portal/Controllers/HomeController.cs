@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace DailyDish.Portal.Controllers
 {
-    public class HomeController : Controller 
+    public class HomeController : Controller
     {
         public ActionResult Index()
         {
@@ -24,10 +24,20 @@ namespace DailyDish.Portal.Controllers
             return View(taste);
         }
 
-        public ActionResult SubmitTaste()
+        public ActionResult SubmitTaste(string[] likeTaste, string[] dislikeTaste, string[] taboo)
         {
+            DailyDishHelper ddh = new DailyDishHelper();
+            ddh.SaveUserTaste(new TasteHistory()
+            {
+                Id = Guid.NewGuid(),
+                OpenId = Guid.NewGuid().ToString(),
+                UserName = "",
+                LikeFlavor = likeTaste == null ? "": string.Join(",", likeTaste),
+                DisLikeFlavor = dislikeTaste == null ? "" : string.Join(",", dislikeTaste),
+                Dieteticrestraint = taboo == null ? "" : string.Join(",", taboo)
+            });
 
-            return View();
+            return Json("提交成功", JsonRequestBehavior.AllowGet);
         }
     }
 }

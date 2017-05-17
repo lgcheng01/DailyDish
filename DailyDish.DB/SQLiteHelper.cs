@@ -80,7 +80,6 @@ namespace DailyDish.DB
                     {
                         connection.Open();
                         int rows = cmd.ExecuteNonQuery();
-                        connection.Close();
                         return rows;
                     }
                     catch (System.Data.SQLite.SQLiteException E)
@@ -96,10 +95,12 @@ namespace DailyDish.DB
         {
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
+                
                 using (SQLiteCommand cmd = new SQLiteCommand())
                 {
                     try
                     {
+                        connection.Open();
                         PrepareCommand(cmd, connection, null, SQLString, cmdParms);
                         int rows = cmd.ExecuteNonQuery();
                         cmd.Parameters.Clear();
@@ -107,6 +108,7 @@ namespace DailyDish.DB
                     }
                     catch (System.Data.SQLite.SQLiteException E)
                     {
+                        connection.Close();
                         throw new Exception(E.Message);
                     }
                 }
@@ -178,7 +180,6 @@ namespace DailyDish.DB
                     cmd.Parameters.Add(parameter);
                 }
             }
-            conn.Close();
         }
 
 
@@ -208,7 +209,7 @@ namespace DailyDish.DB
                 ExecuteSql("CREATE TABLE IF NOT EXISTS UserInfo('OpenId' varchar(100) not null,'UserName' varchar(100) not null)");
                 ExecuteSql("CREATE TABLE IF NOT EXISTS TasteHistory('Id' varchar(100) not null,'OpenId' varchar(100) not null,'UserName' varchar(100) not null,'LikeFlavor' varchar(100),'DisLikeFlavor' varchar(100),'Dieteticrestraint' varchar(100))");
                 ExecuteSql("CREATE TABLE IF NOT EXISTS Flavor('Id' int(100) not null,'FlavorName' varchar(100),'Type' varchar(100))");
-                cnn.Close();
+          
             }
         }
     }

@@ -2,30 +2,30 @@
 
 <div id="fistPage">
     <div class="questionHeader">1/3哪些是你喜欢的口味？</div>
-    @Html.Partial("_LikeTaste",Model.Flavor.Where(x=>x.Type== "like").ToList());
+    @Html.Partial("_LikeTaste", Model.Flavor.Where(x => x.Type == "like").ToList())
     <div class="nextStep">
         <button type="button" class="btn" onclick="PageLoad.SecondStep()">下一步</button>
     </div>
 </div>
 <div id="secondPage" hidden>
-    <h3 class="questionHeader">2/3哪些是特别不喜欢的？</h3>
-    @Html.Partial("_LikeTaste", Model.Flavor.Where(x => x.Type == "dislike").ToList());
+    <h3 class="questionHeader">2/3哪些是你绝对不吃的？</h3>
+    @Html.Partial("_LikeTaste", Model.Flavor.Where(x => x.Type == "dislike").ToList())
     <div class="nextStep">
         <button type="button" class="btn" onclick="PageLoad.ThirdStep()">下一步</button>
     </div>
 </div>
 <div id="thirdPage" hidden>
-    <h3 class="questionHeader">3/3哪些是你绝对不吃的？</h3>
-    @Html.Partial("_LikeTaste", Model.Flavor.Where(x => x.Type == "taboo").ToList());
+    <h3 class="questionHeader">3/3哪些是忌口的东西？</h3>
+    @Html.Partial("_LikeTaste", Model.Flavor.Where(x => x.Type == "taboo").ToList())
     <div class="nextStep">
         <button type="button" class="btn" onclick="SubmitTaste()">提交</button>
     </div>
 </div>
 
 <script>
-    var likeTaste;
-    var dislikeTaste;
-    var taboo;
+    var likeTaste = [];
+    var dislikeTaste = [];
+    var taboo = [];
 
     var PageLoad = {
         SecondStep: function (e) {
@@ -41,18 +41,62 @@
         },
     }
 
-    function AddTasteToResult(arg,type)
-    {
-        if (this.className.indexOf('clickBtn') == 1)
-        {
+    function AddTasteToResult(obj, type, flavorName) {
+        obj.toggleClass("clickBtn");
 
+        if (obj.hasClass("clickBtn")) {
+            if (type == "like") {
+                likeTaste.push(flavorName)
+            }
+            else if (type == "dislike") {
+                dislikeTaste.push(flavorName)
+            }
+            else if (type == "taboo") {
+                taboo.push(flavorName)
+            }
+        }
+
+        else if (!obj.hasClass("clickBtn")) {
+            if (type == "like") {
+                var i = likeTaste.indexOf(flavorName);
+                if (i != -1) {
+                    likeTaste.splice(i, 1);
+                }
+            }
+            else if (type == "dislike") {
+                var i = dislikeTaste.indexOf(flavorName);
+                if (i != -1) {
+                    dislikeTaste.splice(i, 1);
+                }
+            }
+           else if (type == "taboo") {
+               var i = taboo.indexOf(flavorName);
+                if (i != -1) {
+                    taboo.splice(i, 1);
+                }
+            }
         }
     }
 
-    function SubmitTaste()
-    {
+    function SubmitTaste() {
+        $.ajax({
+            url: '/Home/SubmitTaste',
+            type: 'POST',
+            dataType: 'application/json',
+            data: {
+                likeTaste: likeTaste,
+                dislikeTaste: dislikeTaste,
+                taboo: taboo
+            },
 
-
+            success: function (data) {
+                alert(data.responseText);
+            },
+            error: function (data) {
+               
+                alert(data.responseText);
+            }
+        })
     }
 
 </script>

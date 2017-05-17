@@ -26,4 +26,3 @@ C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.DB\bin\Debug\EntityFramework.S
 C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.DB\bin\Debug\System.Data.SQLite.xml
 C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.DB\obj\Debug\DailyDish.DB.dll
 C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.DB\obj\Debug\DailyDish.DB.pdb
-C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.DB\obj\Debug\DailyDish.DB.csprojResolveAssemblyReference.cache
