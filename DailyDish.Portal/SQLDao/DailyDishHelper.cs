@@ -40,15 +40,16 @@ namespace DailyDish.Portal.SQLDll
             SQLiteHelper sh = new SQLiteHelper();
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into TasteHistory(");
-            strSql.Append("Id,OpenId,UserName,LikeFlavor,DisLikeFlavor)");
+            strSql.Append("Id,OpenId,UserName,LikeFlavor,DisLikeFlavor,Dieteticrestraint)");
             strSql.Append(" values (");
-            strSql.Append("@Id,@OpenId,@UserName,@LikeFlavor,@DisLikeFlavor)");
+            strSql.Append("@Id,@OpenId,@UserName,@LikeFlavor,@DisLikeFlavor,@Dieteticrestraint)");
             SQLiteParameter[] parameters = {
                     sh.MakeSQLiteParameter("@Id", DbType.Guid,history.Id),
                     sh.MakeSQLiteParameter("@OpenId", DbType.String,history.OpenId),
                     sh.MakeSQLiteParameter("@UserName", DbType.String,history.UserName),
                     sh.MakeSQLiteParameter("@LikeFlavor", DbType.String,history.LikeFlavor),
-                    sh.MakeSQLiteParameter("@DisLikeFlavor", DbType.String,history.DisLikeFlavor)
+                    sh.MakeSQLiteParameter("@DisLikeFlavor", DbType.String,history.DisLikeFlavor),
+                    sh.MakeSQLiteParameter("@Dieteticrestraint", DbType.String,history.Dieteticrestraint)
                     };
 
             if (sh.ExecuteSql(strSql.ToString(), parameters) >= 1)
@@ -57,6 +58,15 @@ namespace DailyDish.Portal.SQLDll
             }
 
             return ret;
+        }
+
+        public List<Flavor> QueryFlavor()
+        {
+            SQLiteHelper sh = new SQLiteHelper();
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select * FROM Flavor");
+
+          return  sh.Query(strSql.ToString()).Tables[0].AsEnumerable().Select(r => new Flavor { Id = Int32.Parse(r[0].ToString()), FlavorName = r[1].ToString(), Type = r[2].ToString() }).ToList<Flavor>();
         }
 
     }

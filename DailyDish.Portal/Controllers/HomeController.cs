@@ -1,4 +1,6 @@
 ﻿using DailyDish.DB;
+using DailyDish.DB.Entity;
+using DailyDish.Portal.Models;
 using DailyDish.Portal.SQLDll;
 using System;
 using System.Collections.Generic;
@@ -13,10 +15,19 @@ namespace DailyDish.Portal.Controllers
     {
         public ActionResult Index()
         {
-           
-            return View();
+            DailyDishHelper ddh = new DailyDishHelper();
+
+            TasteModel taste = new TasteModel()
+            {
+                Flavor = ddh.QueryFlavor(),
+            };
+            return View(taste);
         }
 
-        
+        public ActionResult SubmitTaste()
+        {
+
+            return View();
+        }
     }
 }

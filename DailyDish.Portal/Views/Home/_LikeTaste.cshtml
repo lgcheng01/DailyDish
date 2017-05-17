@@ -1,0 +1,18 @@
+﻿@model List<DailyDish.DB.Entity.Flavor>
+
+    <div class="container">
+        @foreach (var item in Model)
+        {
+            <button type="button" class="btn btn-default" id="item.FlavorName" onclick="AddTasteToResult(this,item)">item.FlavorName</button>
+        }
+        @*<button type="button" class="btn btn-default">咸鲜</button>
+        <button type="button" class="btn btn-default">麻辣</button>
+        <button type="button" class="btn btn-default">酸辣</button>
+        <button type="button" class="btn btn-default">甜</button>
+        <button type="button" class="btn btn-default">奶香</button>
+        <button type="button" class="btn btn-default">咖喱味</button>
+        <button type="button" class="btn btn-default">苦</button>
+        <button type="button" class="btn btn-default">香辣</button>
+        <button type="button" class="btn btn-default">葱香</button>*@
+    </div>
+

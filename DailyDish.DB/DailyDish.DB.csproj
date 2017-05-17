@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\Flavor.cs" />
     <Compile Include="Entity\TasteHistory.cs" />
     <Compile Include="Entity\UserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

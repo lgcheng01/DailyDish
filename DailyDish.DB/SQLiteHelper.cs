@@ -17,14 +17,14 @@ namespace DailyDish.DB
 {
     public class SQLiteHelper
     {
-        private static string DbFile= System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["SQLString"]);
+        private static string DbFile = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["SQLString"]);
         private static string connectionString = "Data Source=" + DbFile;
 
         public SQLiteHelper()
         {
             CreateDataBaseIfNotExists();
         }
-        
+
         public static bool Exists(string strSql)
         {
             object obj = ExecuteSql(strSql);
@@ -47,7 +47,7 @@ namespace DailyDish.DB
             }
         }
 
-        public  bool Exists(string strSql, params SQLiteParameter[] cmdParms)
+        public bool Exists(string strSql, params SQLiteParameter[] cmdParms)
         {
             object obj = ExecuteSql(strSql, cmdParms);
             int cmdresult;
@@ -80,6 +80,7 @@ namespace DailyDish.DB
                     {
                         connection.Open();
                         int rows = cmd.ExecuteNonQuery();
+                        connection.Close();
                         return rows;
                     }
                     catch (System.Data.SQLite.SQLiteException E)
@@ -91,7 +92,7 @@ namespace DailyDish.DB
             }
         }
 
-        public  int ExecuteSql(string SQLString, params SQLiteParameter[] cmdParms)
+        public int ExecuteSql(string SQLString, params SQLiteParameter[] cmdParms)
         {
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
@@ -128,12 +129,12 @@ namespace DailyDish.DB
             {
                 throw new Exception(e.Message);
             }
-        
+
 
         }
 
-        
-        public static DataSet Query(string SQLString, params SQLiteParameter[] cmdParms)
+
+        public  DataSet Query(string SQLString, params SQLiteParameter[] cmdParms)
         {
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
@@ -177,10 +178,11 @@ namespace DailyDish.DB
                     cmd.Parameters.Add(parameter);
                 }
             }
+            conn.Close();
         }
-        
-        
-        public  SQLiteParameter MakeSQLiteParameter(string name, DbType type, object value)
+
+
+        public SQLiteParameter MakeSQLiteParameter(string name, DbType type, object value)
         {
             SQLiteParameter parm = new SQLiteParameter(name, type);
             parm.Value = value;
@@ -204,7 +206,9 @@ namespace DailyDish.DB
             {
                 cnn.Open();
                 ExecuteSql("CREATE TABLE IF NOT EXISTS UserInfo('OpenId' varchar(100) not null,'UserName' varchar(100) not null)");
-                ExecuteSql("CREATE TABLE IF NOT EXISTS TasteHistory('Id' varchar(100) not null,'OpenId' varchar(100) not null,'UserName' varchar(100) not null,'LikeFlavor' varchar(100) not null,'DisLikeFlavor' varchar(100) not null)");
+                ExecuteSql("CREATE TABLE IF NOT EXISTS TasteHistory('Id' varchar(100) not null,'OpenId' varchar(100) not null,'UserName' varchar(100) not null,'LikeFlavor' varchar(100),'DisLikeFlavor' varchar(100),'Dieteticrestraint' varchar(100))");
+                ExecuteSql("CREATE TABLE IF NOT EXISTS Flavor('Id' int(100) not null,'FlavorName' varchar(100),'Type' varchar(100))");
+                cnn.Close();
             }
         }
     }

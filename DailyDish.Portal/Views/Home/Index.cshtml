@@ -1,1 +1,58 @@
-﻿
+﻿@model DailyDish.Portal.Models.TasteModel
+
+<div id="fistPage">
+    <div class="questionHeader">1/3哪些是你喜欢的口味？</div>
+    @Html.Partial("_LikeTaste",Model.Flavor.Where(x=>x.Type== "like").ToList());
+    <div class="nextStep">
+        <button type="button" class="btn" onclick="PageLoad.SecondStep()">下一步</button>
+    </div>
+</div>
+<div id="secondPage" hidden>
+    <h3 class="questionHeader">2/3哪些是特别不喜欢的？</h3>
+    @Html.Partial("_LikeTaste", Model.Flavor.Where(x => x.Type == "dislike").ToList());
+    <div class="nextStep">
+        <button type="button" class="btn" onclick="PageLoad.ThirdStep()">下一步</button>
+    </div>
+</div>
+<div id="thirdPage" hidden>
+    <h3 class="questionHeader">3/3哪些是你绝对不吃的？</h3>
+    @Html.Partial("_LikeTaste", Model.Flavor.Where(x => x.Type == "taboo").ToList());
+    <div class="nextStep">
+        <button type="button" class="btn" onclick="SubmitTaste()">提交</button>
+    </div>
+</div>
+
+<script>
+    var likeTaste;
+    var dislikeTaste;
+    var taboo;
+
+    var PageLoad = {
+        SecondStep: function (e) {
+            $("#secondPage").removeAttr('hidden');
+            $("#fistPage").attr('hidden', 'hidden');
+            $("#thirdPage").attr('hidden', 'hidden');
+        },
+
+        ThirdStep: function () {
+            $("#secondPage").attr('hidden', 'hidden');
+            $("#fistPage").attr('hidden', 'hidden');
+            $("#thirdPage").removeAttr('hidden');
+        },
+    }
+
+    function AddTasteToResult(arg,type)
+    {
+        if (this.className.indexOf('clickBtn') == 1)
+        {
+
+        }
+    }
+
+    function SubmitTaste()
+    {
+
+
+    }
+
+</script>
