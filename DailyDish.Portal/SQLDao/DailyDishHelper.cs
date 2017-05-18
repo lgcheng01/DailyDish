@@ -44,7 +44,7 @@ namespace DailyDish.Portal.SQLDll
             strSql.Append(" values (");
             strSql.Append("@Id,@OpenId,@UserName,@LikeFlavor,@DisLikeFlavor,@Dieteticrestraint)");
             SQLiteParameter[] parameters = {
-                    sh.MakeSQLiteParameter("@Id", DbType.Guid,history.Id),
+                    sh.MakeSQLiteParameter("@Id", DbType.String,history.Id),
                     sh.MakeSQLiteParameter("@OpenId", DbType.String,history.OpenId),
                     sh.MakeSQLiteParameter("@UserName", DbType.String,history.UserName),
                     sh.MakeSQLiteParameter("@LikeFlavor", DbType.String,history.LikeFlavor),

@@ -26,10 +26,11 @@ namespace DailyDish.Portal.Controllers
 
         public ActionResult SubmitTaste(string[] likeTaste, string[] dislikeTaste, string[] taboo)
         {
+            Guid historyId = Guid.NewGuid();
             DailyDishHelper ddh = new DailyDishHelper();
             ddh.SaveUserTaste(new TasteHistory()
             {
-                Id = Guid.NewGuid(),
+                Id = historyId.ToString(),
                 OpenId = Guid.NewGuid().ToString(),
                 UserName = "",
                 LikeFlavor = likeTaste == null ? "": string.Join(",", likeTaste),

@@ -13,10 +13,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/22/2013 08:43:40</publishTime>
     </File>
     <File Include="bin/DailyDish.DB.dll">
-      <publishTime>05/17/2017 10:03:21</publishTime>
+      <publishTime>05/17/2017 14:43:20</publishTime>
     </File>
     <File Include="bin/DailyDish.Portal.dll">
-      <publishTime>05/17/2017 10:03:24</publishTime>
+      <publishTime>05/17/2017 14:43:23</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>09/11/2013 09:10:04</publishTime>
@@ -115,7 +115,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/10/2017 13:54:34</publishTime>
     </File>
     <File Include="Content/main.css">
-      <publishTime>05/16/2017 17:16:46</publishTime>
+      <publishTime>05/17/2017 14:35:22</publishTime>
     </File>
     <File Include="Content/Site.css">
       <publishTime>05/16/2017 17:10:56</publishTime>
@@ -169,7 +169,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/10/2017 13:54:41</publishTime>
     </File>
     <File Include="Scripts/main.js">
-      <publishTime>05/16/2017 14:25:48</publishTime>
+      <publishTime>05/17/2017 13:57:33</publishTime>
     </File>
     <File Include="Scripts/modernizr-2.6.2.js">
       <publishTime>05/10/2017 13:54:39</publishTime>
@@ -184,13 +184,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/16/2017 15:49:04</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>05/17/2017 10:01:02</publishTime>
+      <publishTime>05/17/2017 14:41:12</publishTime>
     </File>
     <File Include="Views/Home/_DisLikeTaste.cshtml">
       <publishTime>05/16/2017 15:51:19</publishTime>
     </File>
     <File Include="Views/Home/_LikeTaste.cshtml">
-      <publishTime>05/17/2017 09:28:43</publishTime>
+      <publishTime>05/17/2017 14:27:34</publishTime>
     </File>
     <File Include="Views/Home/_TabooTaste.cshtml">
       <publishTime>05/16/2017 17:04:25</publishTime>
@@ -199,7 +199,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/10/2017 13:54:32</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>05/16/2017 17:13:07</publishTime>
+      <publishTime>05/17/2017 14:32:12</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>05/10/2017 13:54:32</publishTime>
