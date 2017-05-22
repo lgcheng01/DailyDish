@@ -33,7 +33,7 @@ namespace DailyDish.Portal.Controllers
                 Id = historyId.ToString(),
                 OpenId = Guid.NewGuid().ToString(),
                 UserName = "",
-                LikeFlavor = likeTaste == null ? "" : string.Join(",", likeTaste),
+                LikeFlavor = likeTaste == null ? "": string.Join(",", likeTaste),
                 DisLikeFlavor = dislikeTaste == null ? "" : string.Join(",", dislikeTaste),
                 Dieteticrestraint = taboo == null ? "" : string.Join(",", taboo)
             });
