@@ -14,5 +14,6 @@ namespace DailyDish.DB.Entity
         public string LikeFlavor { get; set; }
         public string DisLikeFlavor { get; set; }
         public string Dieteticrestraint { get; set; }
+        public DateTime CreateTime { get; set; }
     }
 }
