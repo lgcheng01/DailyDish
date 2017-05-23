@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0174A4C0-BDFA-4C83-8C0F-B921C5E6BA78}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>sz_training_crowdsourcing_wechatinterface</RootNamespace>
+    <AssemblyName>sz-training-crowdsourcing_wechatinterface</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configurations\WeChatConfiguration.cs" />
+    <Compile Include="Entities\Menu\MenuButton.cs" />
+    <Compile Include="Entities\Menu\MenuClick.cs" />
+    <Compile Include="Entities\Menu\MenuModelBase.cs" />
+    <Compile Include="Entities\Menu\MenuSub.cs" />
+    <Compile Include="Entities\Menu\MenuView.cs" />
+    <Compile Include="Entities\Token\OAuthGlobalToken.cs" />
+    <Compile Include="Entities\Token\OAuthToken.cs" />
+    <Compile Include="Entities\User\OAuthUser.cs" />
+    <Compile Include="Enums\ReceiveMsgType.cs" />
+    <Compile Include="Enums\PassiveResponseMsgType.cs" />
+    <Compile Include="Handlers\EventHandler.cs" />
+    <Compile Include="Handlers\HandlerFactory.cs" />
+    <Compile Include="Handlers\TextHandler.cs" />
+    <Compile Include="Interfaces\IHander.cs" />
+    <Compile Include="Interfaces\ITemplate.cs" />
+    <Compile Include="Managers\CustomManager.cs" />
+    <Compile Include="Managers\MenuManager.cs" />
+    <Compile Include="Managers\OAuthManager.cs" />
+    <Compile Include="Managers\QrCodeManager.cs" />
+    <Compile Include="Managers\TokenManager.cs" />
+    <Compile Include="Messages\ReceiveMessage\EventMessage.cs" />
+    <Compile Include="Messages\ReceiveMessage\LinkMessage.cs" />
+    <Compile Include="Messages\ReceiveMessage\LocationMessage.cs" />
+    <Compile Include="Messages\ReceiveMessage\Message.cs" />
+    <Compile Include="Messages\ReceiveMessage\ImageMessage.cs" />
+    <Compile Include="Messages\ReceiveMessage\ShortVideoMessage.cs" />
+    <Compile Include="Messages\ReceiveMessage\TextMessage.cs" />
+    <Compile Include="Messages\ReceiveMessage\VideoMessage.cs" />
+    <Compile Include="Messages\ReceiveMessage\VoiceMessage.cs" />
+    <Compile Include="Messages\SendMessage\ImageSendMessage.cs" />
+    <Compile Include="Messages\SendMessage\MusicSendMessage.cs" />
+    <Compile Include="Messages\SendMessage\NewsSendMessage.cs" />
+    <Compile Include="Messages\SendMessage\SendMessage.cs" />
+    <Compile Include="Messages\SendMessage\TextSendMessage.cs" />
+    <Compile Include="Messages\SendMessage\VideoSendMessage.cs" />
+    <Compile Include="Messages\SendMessage\VoiceSendMessage.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\WeChatHelper.cs" />
+    <Compile Include="Utils\WeChatHttpUtility.cs" />
+    <Compile Include="WeChatCore.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\bys.db\bys.db.csproj">
+      <Project>{c66516a0-2a34-4b1e-b3b9-72140eee2e79}</Project>
+      <Name>bys.db</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

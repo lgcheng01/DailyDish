@@ -15,22 +15,26 @@ namespace DailyDish.Portal.SQLDll
         public int CreateUser(string openId, string userName)
         {
             int ret = 0;
-            SQLiteHelper sh = new SQLiteHelper();
-            StringBuilder strSql = new StringBuilder();
-            strSql.Append("insert into UserInfo(");
-            strSql.Append("OpenId,UserName)");
-            strSql.Append(" values (");
-            strSql.Append("@OpenId,@UserName)");
-            SQLiteParameter[] parameters = {
+            if (QueryUser(openId) == null)
+            {
+                SQLiteHelper sh = new SQLiteHelper();
+                StringBuilder strSql = new StringBuilder();
+                strSql.Append("insert into UserInfo(");
+                strSql.Append("OpenId,UserName)");
+                strSql.Append(" values (");
+                strSql.Append("@OpenId,@UserName)");
+                SQLiteParameter[] parameters = {
                     sh.MakeSQLiteParameter("@OpenId", DbType.String,openId),
                     sh.MakeSQLiteParameter("@UserName", DbType.String,userName)
                     };
 
-            if (sh.ExecuteSql(strSql.ToString(), parameters) >= 1)
-            {
-                ret = 1;
-            }
+                if (sh.ExecuteSql(strSql.ToString(), parameters) >= 1)
+                {
+                    ret = 1;
+                }
 
+                return ret;
+            }
             return ret;
         }
 
@@ -69,5 +73,15 @@ namespace DailyDish.Portal.SQLDll
           return  sh.Query(strSql.ToString()).Tables[0].AsEnumerable().Select(r => new Flavor { Id = Int32.Parse(r[0].ToString()), FlavorName = r[1].ToString(), Type = r[2].ToString() }).ToList<Flavor>();
         }
 
+        public UserInfo QueryUser(string openId)
+        {
+            SQLiteHelper sh = new SQLiteHelper();
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select * FROM UserInfo");
+            strSql.Append(" where OpenId=@OpenId ");
+            SQLiteParameter[] parameters = {
+                    sh.MakeSQLiteParameter("@OpenId", DbType.String,openId)};
+            return (UserInfo)sh.GetSingle(strSql.ToString());
+        }
     }
 }

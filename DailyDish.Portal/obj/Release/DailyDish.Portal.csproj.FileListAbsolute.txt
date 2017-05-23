@@ -48,3 +48,5 @@ C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.Portal\bin\Newtonsoft.Json.xml
 C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.Portal\obj\Release\DailyDish.Portal.csprojResolveAssemblyReference.cache
 C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.Portal\obj\Release\DailyDish.Portal.dll
 C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.Portal\obj\Release\DailyDish.Portal.pdb
+C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.Portal\bin\sz-training-crowdsourcing_wechatinterface.dll
+C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.Portal\bin\sz-training-crowdsourcing_wechatinterface.pdb

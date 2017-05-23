@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyDish.Portal", "DailyDi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyDish.DB", "DailyDish.DB\DailyDish.DB.csproj", "{6877952E-C113-4795-BF5F-BD1B153DC13E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyDish.Wechat", "DailyDish.Wechat\DailyDish.Wechat.csproj", "{0174A4C0-BDFA-4C83-8C0F-B921C5E6BA78}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6877952E-C113-4795-BF5F-BD1B153DC13E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6877952E-C113-4795-BF5F-BD1B153DC13E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6877952E-C113-4795-BF5F-BD1B153DC13E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0174A4C0-BDFA-4C83-8C0F-B921C5E6BA78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0174A4C0-BDFA-4C83-8C0F-B921C5E6BA78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0174A4C0-BDFA-4C83-8C0F-B921C5E6BA78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0174A4C0-BDFA-4C83-8C0F-B921C5E6BA78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

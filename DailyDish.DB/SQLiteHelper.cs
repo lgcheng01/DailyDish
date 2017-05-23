@@ -131,11 +131,36 @@ namespace DailyDish.DB
             {
                 throw new Exception(e.Message);
             }
-
-
+            
         }
 
-
+        public  object GetSingle(string SQLString)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand(SQLString, connection))
+                {
+                    try
+                    {
+                        connection.Open();
+                        object obj = cmd.ExecuteScalar();
+                        if ((Object.Equals(obj, null)) || (Object.Equals(obj, System.DBNull.Value)))
+                        {
+                            return null;
+                        }
+                        else
+                        {
+                            return obj;
+                        }
+                    }
+                    catch (System.Data.SQLite.SQLiteException e)
+                    {
+                        connection.Close();
+                        throw new Exception(e.Message);
+                    }
+                }
+            }
+        }
         public  DataSet Query(string SQLString, params SQLiteParameter[] cmdParms)
         {
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))

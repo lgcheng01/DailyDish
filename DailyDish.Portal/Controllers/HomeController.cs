@@ -13,9 +13,11 @@ namespace DailyDish.Portal.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(UserInfo user,string openId)
         {
+
             DailyDishHelper ddh = new DailyDishHelper();
+            ddh.QueryUser(openId);
 
             TasteModel taste = new TasteModel()
             {
@@ -24,15 +26,15 @@ namespace DailyDish.Portal.Controllers
             return View(taste);
         }
 
-        public ActionResult SubmitTaste(string[] likeTaste, string[] dislikeTaste, string[] taboo)
+        public ActionResult SubmitTaste(UserInfo user,string[] likeTaste, string[] dislikeTaste, string[] taboo)
         {
             Guid historyId = Guid.NewGuid();
             DailyDishHelper ddh = new DailyDishHelper();
             ddh.SaveUserTaste(new TasteHistory()
             {
                 Id = historyId.ToString(),
-                OpenId = Guid.NewGuid().ToString(),
-                UserName = "",
+                OpenId = user.OpenId,
+                UserName = user.UserName,
                 LikeFlavor = likeTaste == null ? "": string.Join(",", likeTaste),
                 DisLikeFlavor = dislikeTaste == null ? "" : string.Join(",", dislikeTaste),
                 Dieteticrestraint = taboo == null ? "" : string.Join(",", taboo)
