@@ -131,11 +131,36 @@ namespace DailyDish.DB
             {
                 throw new Exception(e.Message);
             }
-
-
+            
         }
 
-
+        public  object GetSingle(string SQLString, params SQLiteParameter[] cmdParms)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand())
+                {
+                    try
+                    {
+                        PrepareCommand(cmd, connection, null, SQLString, cmdParms);
+                        object obj = cmd.ExecuteScalar();
+                        cmd.Parameters.Clear();
+                        if ((Object.Equals(obj, null)) || (Object.Equals(obj, System.DBNull.Value)))
+                        {
+                            return null;
+                        }
+                        else
+                        {
+                            return obj;
+                        }
+                    }
+                    catch (System.Data.SQLite.SQLiteException e)
+                    {
+                        throw new Exception(e.Message);
+                    }
+                }
+            }
+        }
         public  DataSet Query(string SQLString, params SQLiteParameter[] cmdParms)
         {
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
@@ -207,7 +232,7 @@ namespace DailyDish.DB
             {
                 cnn.Open();
                 ExecuteSql("CREATE TABLE IF NOT EXISTS UserInfo('OpenId' varchar(100) not null,'UserName' varchar(100) not null)");
-                ExecuteSql("CREATE TABLE IF NOT EXISTS TasteHistory('Id' varchar(100) not null,'OpenId' varchar(100) not null,'UserName' varchar(100) not null,'LikeFlavor' varchar(100),'DisLikeFlavor' varchar(100),'Dieteticrestraint' varchar(100))");
+                ExecuteSql("CREATE TABLE IF NOT EXISTS TasteHistory('Id' varchar(100) not null,'OpenId' varchar(100) not null,'UserName' varchar(100) not null,'LikeFlavor' varchar(100),'DisLikeFlavor' varchar(100),'Dieteticrestraint' varchar(100),'CreateTime' datetime)");
                 ExecuteSql("CREATE TABLE IF NOT EXISTS Flavor('Id' int(100) not null,'FlavorName' varchar(100),'Type' varchar(100))");
           
             }
