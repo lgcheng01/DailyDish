@@ -1,23 +1,29 @@
 ﻿@model DailyDish.Portal.Models.TasteModel
 
 <div id="fistPage">
-    <div class="questionHeader">1/3哪些是你喜欢的口味？</div>
+    <div class="questionHeader">1/3哪些是你特别喜欢的口味？</div>
     @Html.Partial("_LikeTaste", Model.Flavor.Where(x => x.Type == "like").ToList())
-    <div class="nextStep">
-        <button type="button" class="btn" onclick="PageLoad.SecondStep()">下一步</button>
+    <div class="buttonBox buttonBox1">
+        <button type="button" class="btn indexButton" onclick="PageLoad.SecondStep()">下一步</button>
     </div>
 </div>
 <div id="secondPage" hidden>
-    <h3 class="questionHeader">2/3哪些是你绝对不吃的？</h3>
+    <h3 class="questionHeader">2/3哪些是你特别不喜欢的口味？</h3>
     @Html.Partial("_LikeTaste", Model.Flavor.Where(x => x.Type == "dislike").ToList())
-    <div class="nextStep">
-        <button type="button" class="btn" onclick="PageLoad.ThirdStep()">下一步</button>
+
+    <div class="buttonBox">
+        <div class="othsers">
+            其他：<input id="otherDisTaste" type="text" />
+        </div>
+        <button type="button" class="btn previousStep" onclick="PageLoad.FirstStep()">上一步</button>
+        <button type="button" class="btn nextStep" onclick="PageLoad.ThirdStep()">下一步</button>
     </div>
 </div>
 <div id="thirdPage" hidden>
-    <h3 class="questionHeader">3/3哪些是忌口的东西？</h3>
+    <h3 class="questionHeader">3/3哪些是你绝对不会吃的东西？</h3>
     @Html.Partial("_LikeTaste", Model.Flavor.Where(x => x.Type == "taboo").ToList())
-    <div class="nextStep">
+    <div class="buttonBox buttonBox1">
+        <button type="button" class="btn previousStep" onclick="PageLoad.SecondStep()">上一步</button>
         <button type="button" class="btn" onclick="SubmitTaste()">提交</button>
     </div>
 </div>
@@ -28,6 +34,11 @@
     var taboo = [];
 
     var PageLoad = {
+        FirstStep: function () {
+            $("#fistPage").removeAttr('hidden');
+            $("#secondPage").attr('hidden', 'hidden');
+            $("#thirdPage").attr('hidden', 'hidden');
+        },
         SecondStep: function (e) {
             $("#secondPage").removeAttr('hidden');
             $("#fistPage").attr('hidden', 'hidden');
@@ -35,6 +46,7 @@
         },
 
         ThirdStep: function () {
+            dislikeTaste.push(document.getElementById("otherDisTaste").value);
             $("#secondPage").attr('hidden', 'hidden');
             $("#fistPage").attr('hidden', 'hidden');
             $("#thirdPage").removeAttr('hidden');
@@ -46,10 +58,24 @@
 
         if (obj.hasClass("clickBtn")) {
             if (type == "like") {
-                likeTaste.push(flavorName)
+                if (likeTaste.length < 5) {
+                    likeTaste.push(flavorName);
+                }
+                else {
+                    obj.removeClass("clickBtn");
+                    alert("最多只能选五个");
+                    return false;
+                }
             }
             else if (type == "dislike") {
-                dislikeTaste.push(flavorName)
+                if (dislikeTaste.length < 5) {
+                    dislikeTaste.push(flavorName);
+                }
+                else {
+                    obj.removeClass("clickBtn");
+                    alert("最多只能选五个");
+                    return false;
+                }
             }
             else if (type == "taboo") {
                 taboo.push(flavorName)
@@ -69,8 +95,8 @@
                     dislikeTaste.splice(i, 1);
                 }
             }
-           else if (type == "taboo") {
-               var i = taboo.indexOf(flavorName);
+            else if (type == "taboo") {
+                var i = taboo.indexOf(flavorName);
                 if (i != -1) {
                     taboo.splice(i, 1);
                 }
@@ -86,14 +112,15 @@
             data: {
                 likeTaste: likeTaste,
                 dislikeTaste: dislikeTaste,
-                taboo: taboo
+                taboo: taboo,
+                otherDislikeTaste: otherDislikeTaste
             },
 
             success: function (data) {
                 alert(data.responseText);
             },
             error: function (data) {
-               
+
                 alert(data.responseText);
             }
         })

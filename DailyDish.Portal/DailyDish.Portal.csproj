@@ -187,8 +187,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\_LikeTaste.cshtml" />
-    <Content Include="Views\Home\_DisLikeTaste.cshtml" />
-    <Content Include="Views\Home\_TabooTaste.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
