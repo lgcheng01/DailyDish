@@ -10,6 +10,5 @@ C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.DB\bin\Debug\System.Data.SQLit
 C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.DB\bin\Debug\EntityFramework.xml
 C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.DB\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.DB\bin\Debug\System.Data.SQLite.xml
-C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.DB\obj\Debug\DailyDish.DB.csprojResolveAssemblyReference.cache
 C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.DB\obj\Debug\DailyDish.DB.dll
 C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.DB\obj\Debug\DailyDish.DB.pdb
