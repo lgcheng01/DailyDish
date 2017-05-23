@@ -5,11 +5,10 @@
 
 </script>
 
-    <div class="container">
-        @foreach (var item in Model)
-        {
-            <button type="button" class="btn btn-default" id="@item.FlavorName" onclick="AddTasteToResult($(this), '@item.Type','@item.FlavorName')">@item.FlavorName</button>
-        }
-     
-    </div>
+<div class="container">
+    @foreach (var item in Model)
+    {
+        <button type="button" class="chooseBtn btn btn-default" id="@item.FlavorName" onclick="AddTasteToResult($(this), '@item.Type','@item.FlavorName')">@item.FlavorName</button>
+    }
+</div>
 
