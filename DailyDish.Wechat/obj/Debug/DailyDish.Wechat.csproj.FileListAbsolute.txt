@@ -15,3 +15,4 @@ C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.Wechat\bin\Debug\DailyDish.Wec
 C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.Wechat\bin\Debug\DailyDish.Wechat.pdb
 C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.Wechat\obj\Debug\DailyDish.Wechat.dll
 C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.Wechat\obj\Debug\DailyDish.Wechat.pdb
+C:\Users\v-liach\Source\Repos\DailyDish\DailyDish.Wechat\obj\Debug\DailyDish.Wechat.csprojResolveAssemblyReference.cache
