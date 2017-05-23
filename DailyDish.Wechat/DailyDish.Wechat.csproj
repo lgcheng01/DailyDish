@@ -7,8 +7,8 @@
     <ProjectGuid>{0174A4C0-BDFA-4C83-8C0F-B921C5E6BA78}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>sz_training_crowdsourcing_wechatinterface</RootNamespace>
-    <AssemblyName>sz-training-crowdsourcing_wechatinterface</AssemblyName>
+    <RootNamespace>DailyDish.Wechat</RootNamespace>
+    <AssemblyName>DailyDish.Wechat</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
