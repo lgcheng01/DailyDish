@@ -134,16 +134,17 @@ namespace DailyDish.DB
             
         }
 
-        public  object GetSingle(string SQLString)
+        public  object GetSingle(string SQLString, params SQLiteParameter[] cmdParms)
         {
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
-                using (SQLiteCommand cmd = new SQLiteCommand(SQLString, connection))
+                using (SQLiteCommand cmd = new SQLiteCommand())
                 {
                     try
                     {
-                        connection.Open();
+                        PrepareCommand(cmd, connection, null, SQLString, cmdParms);
                         object obj = cmd.ExecuteScalar();
+                        cmd.Parameters.Clear();
                         if ((Object.Equals(obj, null)) || (Object.Equals(obj, System.DBNull.Value)))
                         {
                             return null;
@@ -155,7 +156,6 @@ namespace DailyDish.DB
                     }
                     catch (System.Data.SQLite.SQLiteException e)
                     {
-                        connection.Close();
                         throw new Exception(e.Message);
                     }
                 }
@@ -232,7 +232,7 @@ namespace DailyDish.DB
             {
                 cnn.Open();
                 ExecuteSql("CREATE TABLE IF NOT EXISTS UserInfo('OpenId' varchar(100) not null,'UserName' varchar(100) not null)");
-                ExecuteSql("CREATE TABLE IF NOT EXISTS TasteHistory('Id' varchar(100) not null,'OpenId' varchar(100) not null,'UserName' varchar(100) not null,'LikeFlavor' varchar(100),'DisLikeFlavor' varchar(100),'Dieteticrestraint' varchar(100))");
+                ExecuteSql("CREATE TABLE IF NOT EXISTS TasteHistory('Id' varchar(100) not null,'OpenId' varchar(100) not null,'UserName' varchar(100) not null,'LikeFlavor' varchar(100),'DisLikeFlavor' varchar(100),'Dieteticrestraint' varchar(100),'CreateTime' datetime)");
                 ExecuteSql("CREATE TABLE IF NOT EXISTS Flavor('Id' int(100) not null,'FlavorName' varchar(100),'Type' varchar(100))");
           
             }

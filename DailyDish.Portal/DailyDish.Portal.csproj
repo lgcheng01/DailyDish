@@ -148,6 +148,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Handler\EventHandler.cs" />
+    <Compile Include="Handler\HandlerFactory.cs" />
     <Compile Include="Handler\TextHandler.cs" />
     <Compile Include="Models\TasteModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

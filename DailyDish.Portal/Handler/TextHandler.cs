@@ -6,10 +6,11 @@ using System.Linq;
 using System.Web;
 using System.Configuration;
 using DailyDish.Portal.SQLDll;
+using DailyDish.Wechat.Interfaces;
 
 namespace DailyDish.Portal.Handler
 {
-    public class TextHandler
+    public class TextHandler : IHandler
     {
         private string RequestXml { get; set; }
 
@@ -73,10 +74,10 @@ namespace DailyDish.Portal.Handler
         public string DefaultHandler(TextMessage tm)
         {
             DailyDishHelper ddh = new DailyDishHelper();
-            ddh.CreateUser(tm.ToUserName,"");
+            ddh.CreateUser(tm.ToUserName, "");
             if (tm.Content.Contains("1"))
             {
-                tm.Content = ConfigurationManager.AppSettings["WechatUrl"] +  tm.ToUserName;
+                tm.Content = "请点此链接设置个人口味:" + ConfigurationManager.AppSettings["WechatUrl"] + tm.ToUserName;
             }
             else if (tm.Content.Contains("2"))
             {

@@ -13,7 +13,7 @@ namespace DailyDish.Portal.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index(UserInfo user,string openId)
+        public ActionResult Index(UserInfo user, string openId)
         {
 
             DailyDishHelper ddh = new DailyDishHelper();
@@ -26,18 +26,19 @@ namespace DailyDish.Portal.Controllers
             return View(taste);
         }
 
-        public ActionResult SubmitTaste(UserInfo user,string[] likeTaste, string[] dislikeTaste, string[] taboo)
+        public ActionResult SubmitTaste(UserInfo user, string[] likeTaste, string[] dislikeTaste, string[] taboo)
         {
             Guid historyId = Guid.NewGuid();
             DailyDishHelper ddh = new DailyDishHelper();
             ddh.SaveUserTaste(new TasteHistory()
             {
                 Id = historyId.ToString(),
-                OpenId = user.OpenId,
-                UserName = user.UserName,
-                LikeFlavor = likeTaste == null ? "": string.Join(",", likeTaste),
+                OpenId = user.OpenId == null ? string.Empty : user.OpenId,
+                UserName = user.UserName == null ? string.Empty : user.UserName,
+                LikeFlavor = likeTaste == null ? "" : string.Join(",", likeTaste),
                 DisLikeFlavor = dislikeTaste == null ? "" : string.Join(",", dislikeTaste),
-                Dieteticrestraint = taboo == null ? "" : string.Join(",", taboo)
+                Dieteticrestraint = taboo == null ? "" : string.Join(",", taboo),
+                CreateTime = DateTime.Now
             });
 
             return Json("提交成功", JsonRequestBehavior.AllowGet);
