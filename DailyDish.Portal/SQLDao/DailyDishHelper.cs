@@ -82,7 +82,47 @@ namespace DailyDish.Portal.SQLDll
             strSql.Append(" where OpenId=@OpenId ");
             SQLiteParameter[] parameters = {
                     sh.MakeSQLiteParameter("@OpenId", DbType.String,openId)};
-            return (UserInfo)sh.GetSingle(strSql.ToString(),parameters);
+            DataSet data = sh.Query(strSql.ToString(), parameters);
+            if (data.Tables[0].Rows.Count != 0)
+            {
+                UserInfo user = sh.Query(strSql.ToString(), parameters).Tables[0].AsEnumerable().Select(r => new UserInfo { OpenId = r[0].ToString(), UserName = r[1].ToString() }).ToList<UserInfo>()[0];
+
+                return user;
+            }
+            else
+            {
+                return null;
+            }
         }
+        public int ImportDishes(Dishes dishes)
+        {
+            int ret = 0;
+            SQLiteHelper sh = new SQLiteHelper();
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("insert into Dishes(");
+            strSql.Append("Id,DishName,FirstTaste,SecondTaste,Explain,MainIngredients,Accessory,PracticeUrl,Status,CreateTime)");
+            strSql.Append(" values (");
+            strSql.Append("@Id,@DishName,@FirstTaste,@SecondTaste,@Explain,@MainIngredients,@Accessory,@PracticeUrl,@Status,@CreateTime)");
+            SQLiteParameter[] parameters = {
+                    sh.MakeSQLiteParameter("@Id", DbType.String,dishes.Id),
+                    sh.MakeSQLiteParameter("@DishName", DbType.String,dishes.DishName),
+                    sh.MakeSQLiteParameter("@FirstTaste", DbType.String,dishes.FirstTaste),
+                    sh.MakeSQLiteParameter("@SecondTaste", DbType.String,dishes.SecondTaste),
+                    sh.MakeSQLiteParameter("@Explain", DbType.String,dishes.Explain),
+                    sh.MakeSQLiteParameter("@MainIngredients", DbType.String,dishes.MainIngredients),
+                    sh.MakeSQLiteParameter("@Accessory", DbType.String,dishes.Accessory),
+                    sh.MakeSQLiteParameter("@PracticeUrl", DbType.String,dishes.PracticeUrl),
+                    sh.MakeSQLiteParameter("@Status", DbType.String,dishes.Status),
+                    sh.MakeSQLiteParameter("@CreateTime", DbType.DateTime,dishes.CreateTime)
+                    };
+
+            if (sh.ExecuteSql(strSql.ToString(), parameters) >= 1)
+            {
+                ret = 1;
+            }
+
+            return ret;
+        }
+
     }
 }

@@ -74,14 +74,15 @@ namespace DailyDish.Portal.Handler
         public string DefaultHandler(TextMessage tm)
         {
             DailyDishHelper ddh = new DailyDishHelper();
-            ddh.CreateUser(tm.ToUserName, "");
+            ddh.CreateUser(tm.FromUserName, "waiting..");
             if (tm.Content.Contains("1"))
             {
-                tm.Content = "请点此链接设置个人口味:" + ConfigurationManager.AppSettings["WechatUrl"] + tm.ToUserName;
+                tm.Content = "请点此链接设置个人口味:" + ConfigurationManager.AppSettings["WechatUrl"] + tm.FromUserName;
             }
             else if (tm.Content.Contains("2"))
             {
-                tm.Content = "专属推荐";
+
+                tm.Content = "请点此链接查看你的专属推荐";
             }
 
 
