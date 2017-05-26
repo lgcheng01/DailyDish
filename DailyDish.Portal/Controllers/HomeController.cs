@@ -13,11 +13,14 @@ namespace DailyDish.Portal.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index(UserInfo user, string openId)
+        public ActionResult Index(string openId)
         {
-
+            UserInfo user = new UserInfo();
+            
             DailyDishHelper ddh = new DailyDishHelper();
-            ddh.QueryUser(openId);
+            user = ddh.QueryUser(openId);
+
+            Session["wechat"] = user;
 
             TasteModel taste = new TasteModel()
             {
@@ -26,15 +29,16 @@ namespace DailyDish.Portal.Controllers
             return View(taste);
         }
 
-        public ActionResult SubmitTaste(UserInfo user, string[] likeTaste, string[] dislikeTaste, string[] taboo)
+        public ActionResult SubmitTaste(string[] likeTaste, string[] dislikeTaste, string[] taboo)
         {
+            UserInfo user = (UserInfo)Session["wechat"];
             Guid historyId = Guid.NewGuid();
             DailyDishHelper ddh = new DailyDishHelper();
             ddh.SaveUserTaste(new TasteHistory()
             {
                 Id = historyId.ToString(),
-                OpenId = user.OpenId == null ? string.Empty : user.OpenId,
-                UserName = user.UserName == null ? string.Empty : user.UserName,
+                OpenId = string.IsNullOrEmpty(user.OpenId) ? string.Empty : user.OpenId,
+                UserName = string.IsNullOrEmpty(user.UserName) ? string.Empty : user.UserName,
                 LikeFlavor = likeTaste == null ? "" : string.Join(",", likeTaste),
                 DisLikeFlavor = dislikeTaste == null ? "" : string.Join(",", dislikeTaste),
                 Dieteticrestraint = taboo == null ? "" : string.Join(",", taboo),
@@ -43,5 +47,7 @@ namespace DailyDish.Portal.Controllers
 
             return Json("提交成功", JsonRequestBehavior.AllowGet);
         }
+
+
     }
 }

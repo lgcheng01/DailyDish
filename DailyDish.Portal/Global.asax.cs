@@ -1,5 +1,5 @@
 ﻿using DailyDish.DB.Entity;
-using DailyDish.Portal.Binders;
+using DailyDish.Portal.SQLDll;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +19,7 @@ namespace DailyDish.Portal
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-
-            ModelBinders.Binders.Add(typeof(UserInfo), new UserBinder());
         }
+        
     }
 }
