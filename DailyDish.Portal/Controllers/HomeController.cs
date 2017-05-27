@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -31,11 +32,36 @@ namespace DailyDish.Portal.Controllers
             return View(taste);
         }
 
-        public ActionResult SubmitTaste(string[] likeTaste, string[] dislikeTaste, string[] taboo)
+        public ActionResult ShowThanksPage()
         {
-            UserInfo user = (UserInfo)Session["wechat"];
-            Guid historyId = Guid.NewGuid();
+            return View("ShowThanksPage");
+        }
+
+        public ActionResult ShowFoodInfo()
+        {
+            return View("ShowFoodInfo");
+        }
+
+        public ActionResult SubmitTaste(string[] likeTaste, string[] dislikeTaste, string[] taboo, string otherTaboo)
+        {
             DailyDishHelper ddh = new DailyDishHelper();
+            UserInfo user = (UserInfo)Session["wechat"];
+            if (!string.IsNullOrEmpty(otherTaboo))
+            {
+                string regex = @"[,|，|\s]+";
+                string others = otherTaboo.Replace(Regex.Match(otherTaboo, regex).Value, ",");
+                string[] newOthers = others.Split(',');
+                if (taboo == null)
+                {
+                    taboo = newOthers;
+                }
+                else
+                {
+                    taboo = taboo.Concat(newOthers).ToArray();
+                }
+                ddh.AddTabooData(newOthers);
+            }
+            Guid historyId = Guid.NewGuid();
             ddh.SaveUserTaste(new TasteHistory()
             {
                 Id = historyId.ToString(),

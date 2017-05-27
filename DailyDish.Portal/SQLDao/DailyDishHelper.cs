@@ -38,6 +38,29 @@ namespace DailyDish.Portal.SQLDll
             return ret;
         }
 
+        public int AddTabooData(string[] taboo)
+        {
+            int ret = 0;
+            SQLiteHelper sh = new SQLiteHelper();
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("insert into Flavor(");
+            strSql.Append("FlavorName,Type)");
+            strSql.Append("values (");
+            strSql.Append("@FlavorName,@Type)");
+            for (int i = 0; i < taboo.Length; i++)
+            {
+                SQLiteParameter[] parameters = {
+                sh.MakeSQLiteParameter("@FlavorName",DbType.String,taboo[i]),
+                sh.MakeSQLiteParameter("@Type",DbType.String,"taboo"),
+                };
+                if (sh.ExecuteSql(strSql.ToString(), parameters) >= 1)
+                {
+                    ret = 1;
+                }
+            }
+            return ret;
+        }
+
         public int SaveUserTaste(TasteHistory history)
         {
             int ret = 0;

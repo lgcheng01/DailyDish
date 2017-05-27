@@ -11,10 +11,7 @@
     <h3 class="questionHeader">2/3哪些是你特别不喜欢的口味？</h3>
     @Html.Partial("_LikeTaste", Model.Flavor.Where(x => x.Type == "dislike").ToList())
 
-    <div class="buttonBox">
-        <div class="othsers">
-            其他：<input id="otherDisTaste" type="text" />
-        </div>
+    <div class="buttonBox  buttonBox1">
         <button type="button" class="btn previousStep" onclick="PageLoad.FirstStep()">上一步</button>
         <button type="button" class="btn nextStep" onclick="PageLoad.ThirdStep()">下一步</button>
     </div>
@@ -22,7 +19,10 @@
 <div id="thirdPage" hidden>
     <h3 class="questionHeader">3/3哪些是你绝对不会吃的东西？</h3>
     @Html.Partial("_LikeTaste", Model.Flavor.Where(x => x.Type == "taboo").ToList())
-    <div class="buttonBox buttonBox1">
+    <div class="buttonBox">
+        <div class="othsers">
+            其他：<input id="otherTabooTaste" type="text" />
+        </div>
         <button type="button" class="btn previousStep" onclick="PageLoad.SecondStep()">上一步</button>
         <button type="button" class="btn" onclick="SubmitTaste()">提交</button>
     </div>
@@ -46,7 +46,6 @@
         },
 
         ThirdStep: function () {
-            dislikeTaste.push(document.getElementById("otherDisTaste").value);
             $("#secondPage").attr('hidden', 'hidden');
             $("#fistPage").attr('hidden', 'hidden');
             $("#thirdPage").removeAttr('hidden');
@@ -91,6 +90,7 @@
             }
             else if (type == "dislike") {
                 var i = dislikeTaste.indexOf(flavorName);
+                var j = document.getElementById("otherDisTaste").value;
                 if (i != -1) {
                     dislikeTaste.splice(i, 1);
                 }
@@ -105,6 +105,7 @@
     }
 
     function SubmitTaste() {
+        var otherTaboo = document.getElementById("otherTabooTaste").value;
         $.ajax({
             url: '/Home/SubmitTaste',
             type: 'POST',
@@ -113,14 +114,15 @@
                 likeTaste: likeTaste,
                 dislikeTaste: dislikeTaste,
                 taboo: taboo,
+                otherTaboo: otherTaboo
             },
 
             success: function (data) {
                 alert(data.responseText);
             },
             error: function (data) {
-
                 alert(data.responseText);
+                location.href = '/Home/ShowThanksPage';
             }
         })
     }
