@@ -46,18 +46,14 @@ namespace DailyDish.Portal.SQLDll
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into Flavor(");
             strSql.Append("FlavorName,Type)");
-            strSql.Append("values (");
-            strSql.Append("@FlavorName,@Type)");
+            strSql.Append("values");
             for (int i = 0; i < taboo.Length; i++)
             {
-                SQLiteParameter[] parameters = {
-                sh.MakeSQLiteParameter("@FlavorName",DbType.String,taboo[i]),
-                sh.MakeSQLiteParameter("@Type",DbType.String,"taboo"),
-                };
-                if (sh.ExecuteSql(strSql.ToString(), parameters) >= 1)
-                {
-                    ret = 1;
-                }
+                strSql.Append(string.Format("('{0}','taboo'),", taboo[i]));
+            }
+            if (sh.ExecuteSql(strSql.ToString().Trim(',')) >= 1)
+            {
+                ret = 1;
             }
             return ret;
         }
