@@ -172,7 +172,7 @@ namespace DailyDish.DB
                     DataSet ds = new DataSet();
                     try
                     {
-                        da.Fill(ds, "ds");
+                       da.Fill(ds, "ds");
                         cmd.Parameters.Clear();
                     }
                     catch (System.Data.SQLite.SQLiteException ex)
