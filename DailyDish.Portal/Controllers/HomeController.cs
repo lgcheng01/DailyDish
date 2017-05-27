@@ -18,6 +18,8 @@ namespace DailyDish.Portal.Controllers
             UserInfo user = new UserInfo();
             
             DailyDishHelper ddh = new DailyDishHelper();
+            ddh.GetFactorScore("abcd");
+
             user = ddh.QueryUser(openId);
 
             Session["wechat"] = user;

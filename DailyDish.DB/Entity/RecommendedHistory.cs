@@ -8,7 +8,7 @@ namespace DailyDish.DB.Entity
 {
     public class RecommendedHistory
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public string OpenId { get; set; }
         public string DishesId { get; set; }
         public double Score { get; set; }

@@ -8,7 +8,7 @@ namespace DailyDish.DB.Entity
 {
     public class Dishes
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public string DishName { get; set; }
         public string FirstTaste { get; set; }
         public string SecondTaste { get; set; }

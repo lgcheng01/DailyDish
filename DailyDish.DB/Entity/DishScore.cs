@@ -8,9 +8,9 @@ namespace DailyDish.DB.Entity
 {
     public class DishScore
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public string OpenId { get; set; }
-        public Guid DishesId { get; set; }
+        public string DishesId { get; set; }
         public string DishName { get; set; }
         public double Score { get; set; }
         public double FactorScore { get; set; }

@@ -25,7 +25,7 @@ namespace DailyDish.DB
             CreateDataBaseIfNotExists();
         }
 
-        public static bool Exists(string strSql)
+        public  bool Exists(string strSql)
         {
             object obj = ExecuteSql(strSql);
             int cmdresult;
@@ -70,7 +70,7 @@ namespace DailyDish.DB
         }
 
 
-        public static int ExecuteSql(string SQLString)
+        public  int ExecuteSql(string SQLString)
         {
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
@@ -226,15 +226,17 @@ namespace DailyDish.DB
         {
             return new SQLiteConnection("Data Source=" + DbFile,true);
         }
-        private static void CreateDatabase()
+        private  void CreateDatabase()
         {
             using (var cnn = SimpleDbConnection())
             {
                 cnn.Open();
                 ExecuteSql("CREATE TABLE IF NOT EXISTS UserInfo('OpenId' varchar(100) not null,'UserName' varchar(100) not null)");
                 ExecuteSql("CREATE TABLE IF NOT EXISTS TasteHistory('Id' varchar(100) not null,'OpenId' varchar(100) not null,'UserName' varchar(100) not null,'LikeFlavor' varchar(100),'DisLikeFlavor' varchar(100),'Dieteticrestraint' varchar(100),'CreateTime' datetime)");
-                ExecuteSql("CREATE TABLE IF NOT EXISTS Flavor('Id' int(100) not null,'FlavorName' varchar(100),'Type' varchar(100))");
-                ExecuteSql("CREATE TABLE IF NOT EXISTS  Dishes( 'Id' varchar(100) NOT NULL, 'DishName' varchar(100), 'FirstTaste' varchar(100), 'SecondTaste' varchar(100), 'Explain' varchar(100), 'MainIngredients' varchar(100), 'Accessory' varchar(100), 'PracticeUrl' varchar(100), 'Status' int(100), 'CreateTime' datetime)");
+                ExecuteSql("CREATE TABLE IF NOT EXISTS Flavor('Id' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,'FlavorName' varchar(100),'Type' varchar(100))");
+                ExecuteSql("CREATE TABLE IF NOT EXISTS  Dishes( 'Id' varchar(100) NOT NULL, 'DishName' varchar(100), 'FirstTaste' varchar(100), 'SecondTaste' varchar(100), 'Explain' varchar(100), 'MainIngredients' varchar(100), 'Accessory' varchar(100), 'PracticeUrl' varchar(100), 'Status' INTEGER, 'CreateTime' datetime)");
+                ExecuteSql("CREATE TABLE IF NOT EXISTS  DishScore( 'Id' varchar(100) NOT NULL, 'OpenId' varchar(100), 'DishesId' varchar(100), 'DishName' varchar(100), 'Score' double, 'FactorScore' double, 'Accessory' varchar(100), 'Time' INTEGER, 'CreateTime' datetime, 'UpdateTime' datetime)");
+                ExecuteSql("CREATE TABLE IF NOT EXISTS  RecommendedHistory( 'Id' varchar(100) NOT NULL, 'OpenId' varchar(100), 'DishesId' varchar(100), 'Score' double, 'CreateTime' datetime)");
             }
             
         }
