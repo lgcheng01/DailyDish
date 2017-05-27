@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -13,9 +14,14 @@ namespace DailyDish.Portal.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(string openId)
         {
+            UserInfo user = new UserInfo();
+            
             DailyDishHelper ddh = new DailyDishHelper();
+            user = ddh.QueryUser(openId);
+
+            Session["wechat"] = user;
 
             TasteModel taste = new TasteModel()
             {
@@ -24,21 +30,50 @@ namespace DailyDish.Portal.Controllers
             return View(taste);
         }
 
-        public ActionResult SubmitTaste(string[] likeTaste, string[] dislikeTaste, string[] taboo)
+        public ActionResult ShowThanksPage()
         {
-            Guid historyId = Guid.NewGuid();
+            return View("ShowThanksPage");
+        }
+
+        public ActionResult ShowFoodInfo()
+        {
+            return View("ShowFoodInfo");
+        }
+
+        public ActionResult SubmitTaste(string[] likeTaste, string[] dislikeTaste, string[] taboo, string otherTaboo)
+        {
             DailyDishHelper ddh = new DailyDishHelper();
+            UserInfo user = (UserInfo)Session["wechat"];
+            if (!string.IsNullOrEmpty(otherTaboo))
+            {
+                string regex = @"[,|，|\s]+";
+                string others = otherTaboo.Replace(Regex.Match(otherTaboo, regex).Value, ",");
+                string[] newOthers = others.Split(',');
+                if (taboo == null)
+                {
+                    taboo = newOthers;
+                }
+                else
+                {
+                    taboo = taboo.Concat(newOthers).ToArray();
+                }
+                ddh.AddTabooData(newOthers);
+            }
+            Guid historyId = Guid.NewGuid();
             ddh.SaveUserTaste(new TasteHistory()
             {
                 Id = historyId.ToString(),
-                OpenId = Guid.NewGuid().ToString(),
-                UserName = "",
-                LikeFlavor = likeTaste == null ? "": string.Join(",", likeTaste),
+                OpenId = string.IsNullOrEmpty(user.OpenId) ? string.Empty : user.OpenId,
+                UserName = string.IsNullOrEmpty(user.UserName) ? string.Empty : user.UserName,
+                LikeFlavor = likeTaste == null ? "" : string.Join(",", likeTaste),
                 DisLikeFlavor = dislikeTaste == null ? "" : string.Join(",", dislikeTaste),
-                Dieteticrestraint = taboo == null ? "" : string.Join(",", taboo)
+                Dieteticrestraint = taboo == null ? "" : string.Join(",", taboo),
+                CreateTime = DateTime.Now
             });
 
             return Json("提交成功", JsonRequestBehavior.AllowGet);
         }
+
+
     }
 }

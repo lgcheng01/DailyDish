@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DailyDish.DB.Entity;
+using DailyDish.Portal.SQLDll;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,6 +18,8 @@ namespace DailyDish.Portal
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
         }
+        
     }
 }

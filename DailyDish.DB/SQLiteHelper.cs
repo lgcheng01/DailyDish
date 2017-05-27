@@ -17,7 +17,7 @@ namespace DailyDish.DB
 {
     public class SQLiteHelper
     {
-        private static string DbFile = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["SQLString"]);
+        private static string DbFile = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["SQLString"]);
         private static string connectionString = "Data Source=" + DbFile;
 
         public SQLiteHelper()
@@ -131,11 +131,36 @@ namespace DailyDish.DB
             {
                 throw new Exception(e.Message);
             }
-
-
+            
         }
 
-
+        public  object GetSingle(string SQLString, params SQLiteParameter[] cmdParms)
+        {
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                using (SQLiteCommand cmd = new SQLiteCommand())
+                {
+                    try
+                    {
+                        PrepareCommand(cmd, connection, null, SQLString, cmdParms);
+                        object obj = cmd.ExecuteScalar();
+                        cmd.Parameters.Clear();
+                        if ((Object.Equals(obj, null)) || (Object.Equals(obj, System.DBNull.Value)))
+                        {
+                            return null;
+                        }
+                        else
+                        {
+                            return obj;
+                        }
+                    }
+                    catch (System.Data.SQLite.SQLiteException e)
+                    {
+                        throw new Exception(e.Message);
+                    }
+                }
+            }
+        }
         public  DataSet Query(string SQLString, params SQLiteParameter[] cmdParms)
         {
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
@@ -192,14 +217,14 @@ namespace DailyDish.DB
 
         public void CreateDataBaseIfNotExists()
         {
-            if (!File.Exists(DbFile))
-            {
+            //if (!File.Exists(DbFile))
+            //{
                 CreateDatabase();
-            }
+            //}
         }
         public static SQLiteConnection SimpleDbConnection()
         {
-            return new SQLiteConnection("Data Source=" + DbFile);
+            return new SQLiteConnection("Data Source=" + DbFile,true);
         }
         private static void CreateDatabase()
         {
@@ -207,10 +232,11 @@ namespace DailyDish.DB
             {
                 cnn.Open();
                 ExecuteSql("CREATE TABLE IF NOT EXISTS UserInfo('OpenId' varchar(100) not null,'UserName' varchar(100) not null)");
-                ExecuteSql("CREATE TABLE IF NOT EXISTS TasteHistory('Id' varchar(100) not null,'OpenId' varchar(100) not null,'UserName' varchar(100) not null,'LikeFlavor' varchar(100),'DisLikeFlavor' varchar(100),'Dieteticrestraint' varchar(100))");
+                ExecuteSql("CREATE TABLE IF NOT EXISTS TasteHistory('Id' varchar(100) not null,'OpenId' varchar(100) not null,'UserName' varchar(100) not null,'LikeFlavor' varchar(100),'DisLikeFlavor' varchar(100),'Dieteticrestraint' varchar(100),'CreateTime' datetime)");
                 ExecuteSql("CREATE TABLE IF NOT EXISTS Flavor('Id' int(100) not null,'FlavorName' varchar(100),'Type' varchar(100))");
-          
+                ExecuteSql("CREATE TABLE IF NOT EXISTS  Dishes( 'Id' varchar(100) NOT NULL, 'DishName' varchar(100), 'FirstTaste' varchar(100), 'SecondTaste' varchar(100), 'Explain' varchar(100), 'MainIngredients' varchar(100), 'Accessory' varchar(100), 'PracticeUrl' varchar(100), 'Status' int(100), 'CreateTime' datetime)");
             }
+            
         }
     }
 }

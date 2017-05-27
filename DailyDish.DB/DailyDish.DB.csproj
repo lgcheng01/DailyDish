@@ -71,7 +71,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\Dishes.cs" />
+    <Compile Include="Entity\DishScore.cs" />
     <Compile Include="Entity\Flavor.cs" />
+    <Compile Include="Entity\RecommendedHistory.cs" />
     <Compile Include="Entity\TasteHistory.cs" />
     <Compile Include="Entity\UserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
