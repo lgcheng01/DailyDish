@@ -23,7 +23,7 @@ namespace DailyDish.Test
             {
                 Dishes dishes = new Dishes()
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString(),
                     DishName = item[0],
                     FirstTaste =item[1],
                     SecondTaste =item[2],

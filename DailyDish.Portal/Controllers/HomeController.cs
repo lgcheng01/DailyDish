@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -17,8 +19,10 @@ namespace DailyDish.Portal.Controllers
         public ActionResult Index(string openId)
         {
             UserInfo user = new UserInfo();
-            
+
             DailyDishHelper ddh = new DailyDishHelper();
+            ddh.GetFactorScore("abcd");
+
             user = ddh.QueryUser(openId);
 
             Session["wechat"] = user;
@@ -70,7 +74,7 @@ namespace DailyDish.Portal.Controllers
                 Dieteticrestraint = taboo == null ? "" : string.Join(",", taboo),
                 CreateTime = DateTime.Now
             });
-
+            Task.Factory.StartNew(() => { ddh.GetFactorScore(user.OpenId); });
             return Json("提交成功", JsonRequestBehavior.AllowGet);
         }
 
