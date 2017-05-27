@@ -21,7 +21,6 @@ namespace DailyDish.Portal.Controllers
             UserInfo user = new UserInfo();
 
             DailyDishHelper ddh = new DailyDishHelper();
-            ddh.GetFactorScore("abcd");
 
             user = ddh.QueryUser(openId);
 
@@ -78,6 +77,16 @@ namespace DailyDish.Portal.Controllers
             return Json("提交成功", JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetRecommendDish(string openId)
+        {
+            DailyDishHelper ddh = new DailyDishHelper();
+            UserInfo user = (UserInfo)Session["wechat"];
+            DishesModel model = ddh.GetDishByUser(openId);
 
+            Task.Factory.StartNew(() => { ddh.UpdateDishScore(openId, model.Id); });
+            Task.Factory.StartNew(() => { ddh.SaveRecommendHistory(openId, model.Id, model.Score); });
+
+            return View("ShowFoodInfo", model);
+        }
     }
 }

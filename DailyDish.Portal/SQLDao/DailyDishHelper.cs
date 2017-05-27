@@ -1,5 +1,6 @@
 ﻿using DailyDish.DB;
 using DailyDish.DB.Entity;
+using DailyDish.Portal.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -168,6 +169,30 @@ namespace DailyDish.Portal.SQLDll
             }).ToList<Dishes>();
             return list;
         }
+
+        public Dishes QueryDishesById(string dishesId)
+        {
+            SQLiteHelper sh = new SQLiteHelper();
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select * FROM Dishes");
+            strSql.Append(" where Id=@Id ");
+            SQLiteParameter[] parameters = {
+                    sh.MakeSQLiteParameter("@Id", DbType.String,dishesId)};
+            Dishes list = sh.Query(strSql.ToString(), parameters).Tables[0].AsEnumerable().Select(r => new Dishes
+            {
+                Id = r[0].ToString(),
+                DishName = r[1].ToString(),
+                FirstTaste = r[2].ToString(),
+                SecondTaste = r[3].ToString(),
+                Explain = r[4].ToString(),
+                MainIngredients = r[5].ToString(),
+                Accessory = r[6].ToString(),
+                PracticeUrl = r[7].ToString(),
+                Status = Int32.Parse(r[8].ToString()),
+                CreateTime = DateTime.Parse(r[9].ToString())
+            }).ToList<Dishes>()[0];
+            return list;
+        }
         public TasteHistory QueryTasteHistoryByUser(string openId)
         {
             SQLiteHelper sh = new SQLiteHelper();
@@ -176,7 +201,6 @@ namespace DailyDish.Portal.SQLDll
             strSql.Append(" where OpenId=@OpenId ");
             SQLiteParameter[] parameters = {
                     sh.MakeSQLiteParameter("@OpenId", DbType.String,openId)};
-            DataSet data = sh.Query(strSql.ToString(), parameters);
             TasteHistory taste = sh.Query(strSql.ToString(), parameters).Tables[0].AsEnumerable().Select(r => new TasteHistory
             {
                 Id = r[0].ToString(),
@@ -201,7 +225,7 @@ namespace DailyDish.Portal.SQLDll
             strSql.Append(" values ");
             foreach (var item in score)
             {
-                strSql.Append(string.Format("('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}'),",item.Id,item.OpenId,item.DishesId,item.DishName,item.Score.ToString(),item.FactorScore.ToString(),item.Time.ToString(),item.CreateTime.ToString(),item.UpdateTime.ToString()));
+                strSql.Append(string.Format("('{0}','{1}','{2}','{3}',{4},{5},'{6}','{7}','{8}'),", item.Id, item.OpenId, item.DishesId, item.DishName, item.Score, item.FactorScore, item.Time.ToString(), item.CreateTime.ToString("s"), item.UpdateTime.ToString("s")));
             }
             if (sh.ExecuteSql(strSql.ToString().Trim(',')) >= 1)
             {
@@ -211,16 +235,15 @@ namespace DailyDish.Portal.SQLDll
             return ret;
         }
 
-        public DishScore QueryScoreByUser(string openId, Guid disedId)
+        public DishScore QuerySingleScoreByUser(string openId, string disedId)
         {
             SQLiteHelper sh = new SQLiteHelper();
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select * FROM DishScore");
-            strSql.Append(" where OpenId=@openId and DishesId=@disedId ");
+            strSql.Append(" where OpenId=@OpenId and DishesId=@DishesId ");
             SQLiteParameter[] parameters = {
                     sh.MakeSQLiteParameter("@OpenId", DbType.String,openId),
                     sh.MakeSQLiteParameter("@DishesId", DbType.String,disedId.ToString())};
-            DataSet data = sh.Query(strSql.ToString(), parameters);
             DishScore DishScore = sh.Query(strSql.ToString(), parameters).Tables[0].AsEnumerable().Select(r => new DishScore
             {
                 Id = r[0].ToString(),
@@ -235,18 +258,46 @@ namespace DailyDish.Portal.SQLDll
             }).ToList<DishScore>()[0];
             return DishScore;
         }
-        public bool UpdateScore(string openId, Guid disedId)
+
+        public List<DishScore> QueryScoreByUser(string openId)
         {
-            DishScore dish = QueryScoreByUser(openId, disedId);
+            SQLiteHelper sh = new SQLiteHelper();
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select * FROM DishScore");
+            strSql.Append(" where OpenId=@OpenId ");
+            SQLiteParameter[] parameters = {
+                    sh.MakeSQLiteParameter("@OpenId", DbType.String,openId),
+            };
+            DataSet data = sh.Query(strSql.ToString(), parameters);
+            List<DishScore> DishScore = sh.Query(strSql.ToString(), parameters).Tables[0].AsEnumerable().Select(r => new DishScore
+            {
+                Id = r[0].ToString(),
+                OpenId = r[1].ToString(),
+                DishesId = r[2].ToString(),
+                DishName = r[3].ToString(),
+                Score = double.Parse(r[4].ToString()),
+                FactorScore = double.Parse(r[5].ToString()),
+                Time = Int32.Parse(r[6].ToString()),
+                CreateTime = DateTime.Parse(r[7].ToString()),
+                UpdateTime = DateTime.Parse(r[8].ToString())
+            }).ToList<DishScore>();
+            return DishScore;
+        }
+
+        public bool UpdateScore(string openId, string disedId)
+        {
+            DishScore dish = QuerySingleScoreByUser(openId, disedId);
             SQLiteHelper sh = new SQLiteHelper();
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update DishScore set ");
             strSql.Append("Score=@Score,");
             strSql.Append("Time=@Time");
-            strSql.Append(" where OpenId=@openId and DishesId=@disedId");
+            strSql.Append(" where OpenId=@OpenId and DishesId=@DishesId");
             SQLiteParameter[] parameters = {
-                    sh.MakeSQLiteParameter("@Score",DbType.Double,dish.FactorScore*(dish.Time==1?10:dish.Time-1)),
-                    sh.MakeSQLiteParameter("@Time",DbType.Int32,dish.Time==1?10:dish.Time-1)
+                    sh.MakeSQLiteParameter("@Score",DbType.Double,dish.FactorScore*Math.Log10(dish.Time==1?10:dish.Time-1)),
+                    sh.MakeSQLiteParameter("@Time",DbType.Int32,dish.Time==1?10:dish.Time-1),
+                    sh.MakeSQLiteParameter("@OpenId",DbType.String,openId),
+                    sh.MakeSQLiteParameter("@DishesId",DbType.String,disedId)
             };
 
             if (sh.ExecuteSql(strSql.ToString(), parameters) >= 1)
@@ -259,55 +310,124 @@ namespace DailyDish.Portal.SQLDll
             }
         }
 
+        public int InsertRecommendedHistory(RecommendedHistory history)
+        {
+            int ret = 0;
+            SQLiteHelper sh = new SQLiteHelper();
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("insert into RecommendedHistory(");
+            strSql.Append("Id,OpenId,DishesId,Score,CreateTime)");
+            strSql.Append(" values (");
+            strSql.Append("@Id,@OpenId,@DishesId,@Score,@CreateTime)");
+            SQLiteParameter[] parameters = {
+                    sh.MakeSQLiteParameter("@Id", DbType.String,history.Id),
+                    sh.MakeSQLiteParameter("@OpenId", DbType.String,history.OpenId),
+                    sh.MakeSQLiteParameter("@DishesId", DbType.String,history.DishesId),
+                    sh.MakeSQLiteParameter("@Score", DbType.Double,history.Score),
+                    sh.MakeSQLiteParameter("@CreateTime", DbType.DateTime,history.CreateTime)
+                    };
+
+            if (sh.ExecuteSql(strSql.ToString(), parameters) >= 1)
+            {
+                ret = 1;
+            }
+
+            return ret;
+        }
+
         public bool GetFactorScore(string openId)
         {
-            TasteHistory taste = QueryTasteHistoryByUser(openId);
-            List<Dishes> dishes = QueryDishes();
-            List<DishScore> scoreList = new List<DishScore>();
-
-            foreach (var item in dishes)
+            List<DishScore> scorelist = QueryScoreByUser(openId);
+            if (scorelist.Count == 0)
             {
-                double x = 0;
-                double y = 0;
-                double z = 0;
-                if (taste.LikeFlavor.Contains(item.FirstTaste) || taste.LikeFlavor.Contains(item.SecondTaste))
+                TasteHistory taste = QueryTasteHistoryByUser(openId);
+                List<Dishes> dishes = QueryDishes();
+                List<DishScore> scoreList = new List<DishScore>();
+
+                foreach (var item in dishes)
                 {
-                    x = 0.5F;
+                    double x = 0;
+                    double y = 0;
+                    double z = 0;
+                    if (taste.LikeFlavor.Contains(item.FirstTaste) || taste.LikeFlavor.Contains(item.SecondTaste))
+                    {
+                        x = 0.5F;
+                    }
+                    if (taste.DisLikeFlavor.Contains(item.FirstTaste) || taste.DisLikeFlavor.Contains(item.SecondTaste))
+                    {
+                        x = -0.5F;
+                    }
+                    if (taste.Dieteticrestraint.Split(',').Where(r => item.MainIngredients.Contains(r)).Count() > 0)
+                    {
+                        y = -1F;
+                    }
+                    if (taste.Dieteticrestraint.Split(',').Where(r => item.Accessory.Contains(r)).Count() > 0)
+                    {
+                        z = -0.25F;
+                    }
+                    DishScore score = new DishScore()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        DishesId = item.Id,
+                        OpenId = taste.OpenId,
+                        DishName = item.DishName,
+                        FactorScore = x + y + z,
+                        Time = 10,
+                        Score = (x + y + z) * Math.Log10(10),
+                        CreateTime = DateTime.UtcNow.AddHours(8),
+                        UpdateTime = DateTime.UtcNow.AddHours(8)
+                    };
+                    scoreList.Add(score);
                 }
-                if (taste.DisLikeFlavor.Contains(item.FirstTaste) || taste.DisLikeFlavor.Contains(item.SecondTaste))
-                {
-                    x = -0.5F;
-                }
-                if (taste.Dieteticrestraint.Split(',').Where(r => item.MainIngredients.Contains(r)).Count() > 0)
-                {
-                    y = -1F;
-                }
-                if (taste.Dieteticrestraint.Split(',').Where(r => item.Accessory.Contains(r)).Count() > 0)
-                {
-                    z = -0.25F;
-                }
-                DishScore score = new DishScore()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    DishesId = item.Id,
-                    OpenId = taste.OpenId,
-                    DishName = item.DishName,
-                    FactorScore = x + y + z,
-                    Time = 10,
-                    Score = (x + y + z) * Math.Log10(10),
-                    CreateTime = DateTime.UtcNow.AddHours(8),
-                    UpdateTime = DateTime.UtcNow.AddHours(8)
-                };
-                scoreList.Add(score);
+                InsertScore(scoreList);
+                return true;
             }
-            InsertScore(scoreList);
-            return true;
+            return false;
         }
 
 
-        public bool UpdateDishScore(string openId, Guid disedId)
+        public bool UpdateDishScore(string openId, string disedId)
         {
             return UpdateScore(openId, disedId);
+        }
+
+        public void SaveRecommendHistory(string openId, string dishesId, double score)
+        {
+            InsertRecommendedHistory(new RecommendedHistory()
+            {
+                Id = Guid.NewGuid().ToString(),
+                OpenId = openId,
+                DishesId = dishesId,
+                Score = score,
+                CreateTime = DateTime.Now,
+            });
+        }
+
+        public DishesModel GetDishByUser(string openId)
+        {
+            List<DishScore> score = QueryScoreByUser(openId);
+            if (score.Count == 0)
+            {
+                GetFactorScore(openId);
+                score = QueryScoreByUser(openId);
+            }
+            DishScore dishscore = score.OrderByDescending(r => r.Score).ThenBy(r => r.DishesId).First();
+            Dishes dish = QueryDishesById(dishscore.DishesId);
+            DishesModel model = new DishesModel()
+            {
+                Id = dish.Id,
+                SecondTaste = dish.SecondTaste,
+                Status = dish.Status,
+                Accessory = dish.Accessory,
+                CreateTime = dish.CreateTime,
+                DishName = dish.DishName,
+                Explain = dish.Explain,
+                FirstTaste = dish.FirstTaste,
+                MainIngredients = dish.MainIngredients,
+                PracticeUrl = dish.PracticeUrl,
+                Score = dishscore.Score
+            };
+            return model;
         }
     }
 
