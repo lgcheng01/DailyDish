@@ -82,7 +82,7 @@ namespace DailyDish.Portal.Handler
             else if (tm.Content.Contains("2"))
             {
 
-                tm.Content = "请点此链接查看你的专属推荐";
+                tm.Content = "请点此链接查看你的专属推荐" + ConfigurationManager.AppSettings["RecommendUrl"] + tm.FromUserName; ;
             }
 
 
