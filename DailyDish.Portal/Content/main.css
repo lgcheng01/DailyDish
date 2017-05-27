@@ -3,19 +3,7 @@
     font-family: "Microsoft YaHei";
 }
 
-html, body, #fistPage {
-    width: 100%;
-    height: 100%;
-    background: #FEFEFE;
-}
-
-html, body, #secondPage {
-    width: 100%;
-    height: 100%;
-    background: #FEFEFE;
-}
-
-html, body, #thirdPage {
+html, body, #fistPage, #secondPage, #thirdPage {
     width: 100%;
     height: 100%;
     background: #FEFEFE;
@@ -133,13 +121,18 @@ body {
 .foodCantainer {
     width: 100%;
     height: 100%;
+    margin: 0;
 }
 
     .foodCantainer .img {
-        width: 100%;
         height: 30%;
-        background-color: aquamarine;
+        text-align: center;
+        overflow: hidden;
     }
+
+        .foodCantainer .img img {
+            height: 100%;
+        }
 
     .foodCantainer .foodContent {
         width: 100%;
@@ -149,21 +142,22 @@ body {
 .foodTitle {
     width: 100%;
     height: 20%;
-    font-size: 3em;
+    font-size: 2.4em;
     text-align: center;
     font-weight: bold;
-    padding-top: 4%;
+    padding-top: 2%;
 }
 
-    .foodTitle p {
+    .foodTitle p, .foodTitle p a {
         margin-top: 1%;
     }
 
 .instructions {
     width: 90%;
     height: 50%;
-    font-size: 2.4em;
+    font-size: 2.2em;
     margin: 0 auto;
+    margin-bottom: 2%;
 }
 
 .thankBox {
