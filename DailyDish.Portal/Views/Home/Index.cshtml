@@ -32,6 +32,7 @@
     var likeTaste = [];
     var dislikeTaste = [];
     var taboo = [];
+    var otherTaboo = [];
 
     var PageLoad = {
         FirstStep: function () {
@@ -104,7 +105,7 @@
     }
 
     function SubmitTaste() {
-        var otherTaboo = document.getElementById("otherTabooTaste").value;
+        CheckOtherTaboo();
         $.ajax({
             url: '/Home/SubmitTaste',
             type: 'POST',
@@ -124,6 +125,19 @@
                 location.href = '/Home/ShowThanksPage';
             }
         })
+    }
+
+    function CheckOtherTaboo() {
+        var inputValue = document.getElementById("otherTabooTaste").value;
+        var temp = inputValue.replace(/[,|，|\s]+/g, ',');
+        var i = temp.indexOf(",");
+        if (i != -1) {
+            otherTaboo = otherTaboo.concat(temp.split(','));
+        }
+        else {
+            otherTaboo.push(temp);
+        }
+        taboo.push(temp);
     }
 
 </script>

@@ -43,28 +43,19 @@ namespace DailyDish.Portal.Controllers
             return View("ShowFoodInfo");
         }
 
-        public ActionResult SubmitTaste(string[] likeTaste, string[] dislikeTaste, string[] taboo, string otherTaboo)
+        public ActionResult SubmitTaste(string[] likeTaste, string[] dislikeTaste, string[] taboo, string[] otherTaboo)
         {
             DailyDishHelper ddh = new DailyDishHelper();
             UserInfo user = (UserInfo)Session["wechat"];
-            if (!string.IsNullOrEmpty(otherTaboo))
+            if (otherTaboo.Length > 0)
             {
-                string[] newOthers = otherTaboo.Split(',');
-                if (taboo == null)
-                {
-                    taboo = newOthers;
-                }
-                else
-                {
-                    taboo = taboo.Concat(newOthers).ToArray();
-                }
-                ddh.AddTabooData(newOthers);
+                ddh.AddTabooData(otherTaboo);
             }
             Guid historyId = Guid.NewGuid();
             ddh.SaveUserTaste(new TasteHistory()
             {
                 Id = historyId.ToString(),
-                OpenId = user ==null ? string.Empty : user.OpenId,
+                OpenId = user == null ? string.Empty : user.OpenId,
                 UserName = user == null ? string.Empty : user.UserName,
                 LikeFlavor = likeTaste == null ? "" : string.Join(",", likeTaste),
                 DisLikeFlavor = dislikeTaste == null ? "" : string.Join(",", dislikeTaste),
