@@ -143,9 +143,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\WechatController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Handler\EventHandler.cs" />
+    <Compile Include="Handler\HandlerFactory.cs" />
+    <Compile Include="Handler\TextHandler.cs" />
+    <Compile Include="Models\DishesModel.cs" />
     <Compile Include="Models\TasteModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLDao\DailyDishHelper.cs" />
@@ -153,6 +158,8 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\QingJiao_JiDan.jpg" />
+    <Content Include="Content\images\thanks.png" />
     <Content Include="Content\main.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -187,11 +194,12 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\_LikeTaste.cshtml" />
-    <Content Include="Views\Home\_DisLikeTaste.cshtml" />
-    <Content Include="Views\Home\_TabooTaste.cshtml" />
+    <Content Include="Views\Home\ShowFoodInfo.cshtml" />
+    <Content Include="Views\Home\ShowThanksPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Wechat\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -206,6 +214,13 @@
       <Project>{6877952e-c113-4795-bf5f-bd1b153dc13e}</Project>
       <Name>DailyDish.DB</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DailyDish.Wechat\DailyDish.Wechat.csproj">
+      <Project>{0174a4c0-bdfa-4c83-8c0f-b921c5e6ba78}</Project>
+      <Name>DailyDish.Wechat</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
