@@ -1,0 +1,15 @@
+D:\Source\BYS\Suzhou\ShakeRedPackets\Bys.Suzhou.ShakeRedPackets\bys.suzhou.wechatinterface\bin\Release\sz-training-crowdsourcing_wechatinterface.dll.config
+D:\Source\BYS\Suzhou\ShakeRedPackets\Bys.Suzhou.ShakeRedPackets\bys.suzhou.wechatinterface\bin\Release\sz-training-crowdsourcing_wechatinterface.dll
+D:\Source\BYS\Suzhou\ShakeRedPackets\Bys.Suzhou.ShakeRedPackets\bys.suzhou.wechatinterface\bin\Release\sz-training-crowdsourcing_wechatinterface.pdb
+D:\Source\BYS\Suzhou\ShakeRedPackets\Bys.Suzhou.ShakeRedPackets\bys.suzhou.wechatinterface\bin\Release\Microsoft.CSharp.dll
+D:\Source\BYS\Suzhou\ShakeRedPackets\Bys.Suzhou.ShakeRedPackets\bys.suzhou.wechatinterface\bin\Release\Newtonsoft.Json.dll
+D:\Source\BYS\Suzhou\ShakeRedPackets\Bys.Suzhou.ShakeRedPackets\bys.suzhou.wechatinterface\bin\Release\System.Configuration.dll
+D:\Source\BYS\Suzhou\ShakeRedPackets\Bys.Suzhou.ShakeRedPackets\bys.suzhou.wechatinterface\bin\Release\System.Data.DataSetExtensions.dll
+D:\Source\BYS\Suzhou\ShakeRedPackets\Bys.Suzhou.ShakeRedPackets\bys.suzhou.wechatinterface\bin\Release\System.Data.dll
+D:\Source\BYS\Suzhou\ShakeRedPackets\Bys.Suzhou.ShakeRedPackets\bys.suzhou.wechatinterface\bin\Release\System.Xml.dll
+D:\Source\BYS\Suzhou\ShakeRedPackets\Bys.Suzhou.ShakeRedPackets\bys.suzhou.wechatinterface\bin\Release\System.Xml.Linq.dll
+D:\Source\BYS\Suzhou\ShakeRedPackets\Bys.Suzhou.ShakeRedPackets\bys.suzhou.wechatinterface\bin\Release\Newtonsoft.Json.pdb
+D:\Source\BYS\Suzhou\ShakeRedPackets\Bys.Suzhou.ShakeRedPackets\bys.suzhou.wechatinterface\bin\Release\Newtonsoft.Json.xml
+D:\Source\BYS\Suzhou\ShakeRedPackets\Bys.Suzhou.ShakeRedPackets\bys.suzhou.wechatinterface\obj\Release\Bys.Suzhou.Wechatinterface.csprojResolveAssemblyReference.cache
+D:\Source\BYS\Suzhou\ShakeRedPackets\Bys.Suzhou.ShakeRedPackets\bys.suzhou.wechatinterface\obj\Release\sz-training-crowdsourcing_wechatinterface.dll
+D:\Source\BYS\Suzhou\ShakeRedPackets\Bys.Suzhou.ShakeRedPackets\bys.suzhou.wechatinterface\obj\Release\sz-training-crowdsourcing_wechatinterface.pdb
