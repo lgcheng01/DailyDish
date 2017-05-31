@@ -11,6 +11,7 @@ namespace DailyDish.DB.Entity
         public string Id { get; set; }
         public string OpenId { get; set; }
         public string DishesId { get; set; }
+        public string DishName { get; set; }
         public double Score { get; set; }
         public DateTime CreateTime { get; set; }
     }

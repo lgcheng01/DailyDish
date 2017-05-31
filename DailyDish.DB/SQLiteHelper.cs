@@ -10,6 +10,7 @@ using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -25,7 +26,7 @@ namespace DailyDish.DB
             CreateDataBaseIfNotExists();
         }
 
-        public  bool Exists(string strSql)
+        public bool Exists(string strSql)
         {
             object obj = ExecuteSql(strSql);
             int cmdresult;
@@ -70,7 +71,7 @@ namespace DailyDish.DB
         }
 
 
-        public  int ExecuteSql(string SQLString)
+        public int ExecuteSql(string SQLString)
         {
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
@@ -95,7 +96,7 @@ namespace DailyDish.DB
         {
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
-                
+
                 using (SQLiteCommand cmd = new SQLiteCommand())
                 {
                     try
@@ -131,10 +132,10 @@ namespace DailyDish.DB
             {
                 throw new Exception(e.Message);
             }
-            
+
         }
 
-        public  object GetSingle(string SQLString, params SQLiteParameter[] cmdParms)
+        public object GetSingle(string SQLString, params SQLiteParameter[] cmdParms)
         {
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
@@ -161,7 +162,7 @@ namespace DailyDish.DB
                 }
             }
         }
-        public  DataSet Query(string SQLString, params SQLiteParameter[] cmdParms)
+        public DataSet Query(string SQLString, params SQLiteParameter[] cmdParms)
         {
             using (SQLiteConnection connection = new SQLiteConnection(connectionString))
             {
@@ -172,7 +173,7 @@ namespace DailyDish.DB
                     DataSet ds = new DataSet();
                     try
                     {
-                       da.Fill(ds, "ds");
+                        da.Fill(ds, "ds");
                         cmd.Parameters.Clear();
                     }
                     catch (System.Data.SQLite.SQLiteException ex)
@@ -217,16 +218,17 @@ namespace DailyDish.DB
 
         public void CreateDataBaseIfNotExists()
         {
-            //if (!File.Exists(DbFile))
-            //{
-                CreateDatabase();
-            //}
+            while (!File.Exists(DbFile))
+            {
+                Thread.Sleep(500);
+            }
+            CreateDatabase();
         }
         public static SQLiteConnection SimpleDbConnection()
         {
-            return new SQLiteConnection("Data Source=" + DbFile,true);
+            return new SQLiteConnection("Data Source=" + DbFile, true);
         }
-        private  void CreateDatabase()
+        private void CreateDatabase()
         {
             using (var cnn = SimpleDbConnection())
             {
@@ -236,9 +238,9 @@ namespace DailyDish.DB
                 ExecuteSql("CREATE TABLE IF NOT EXISTS Flavor('Id' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,'FlavorName' varchar(100),'Type' varchar(100))");
                 ExecuteSql("CREATE TABLE IF NOT EXISTS  Dishes( 'Id' varchar(100) NOT NULL, 'DishName' varchar(100), 'FirstTaste' varchar(100), 'SecondTaste' varchar(100), 'Explain' varchar(100), 'MainIngredients' varchar(100), 'Accessory' varchar(100), 'PracticeUrl' varchar(100), 'Status' INTEGER, 'CreateTime' datetime)");
                 ExecuteSql("CREATE TABLE IF NOT EXISTS  DishScore( 'Id' varchar(100) NOT NULL, 'OpenId' varchar(100), 'DishesId' varchar(100), 'DishName' varchar(100), 'Score' double, 'FactorScore' double, 'Time' INTEGER, 'CreateTime' datetime, 'UpdateTime' datetime)");
-                ExecuteSql("CREATE TABLE IF NOT EXISTS  RecommendedHistory( 'Id' varchar(100) NOT NULL, 'OpenId' varchar(100), 'DishesId' varchar(100), 'Score' double, 'CreateTime' datetime)");
+                ExecuteSql("CREATE TABLE IF NOT EXISTS  RecommendedHistory( 'Id' varchar(100) NOT NULL, 'OpenId' varchar(100), 'DishesId' varchar(100),DishName varchar(100),'Score' double, 'CreateTime' datetime)");
             }
-            
+
         }
     }
 }
