@@ -49,9 +49,7 @@ namespace DailyDish.Portal.Controllers
             UserInfo user = (UserInfo)Session["wechat"];
             if (!string.IsNullOrEmpty(otherTaboo))
             {
-                string regex = @"[,|，|\s]+";
-                string others = otherTaboo.Replace(Regex.Match(otherTaboo, regex).Value, ",");
-                string[] newOthers = others.Split(',');
+                string[] newOthers = otherTaboo.Split(',');
                 if (taboo == null)
                 {
                     taboo = newOthers;
@@ -66,14 +64,14 @@ namespace DailyDish.Portal.Controllers
             ddh.SaveUserTaste(new TasteHistory()
             {
                 Id = historyId.ToString(),
-                OpenId = string.IsNullOrEmpty(user.OpenId) ? string.Empty : user.OpenId,
-                UserName = string.IsNullOrEmpty(user.UserName) ? string.Empty : user.UserName,
+                OpenId = user ==null ? string.Empty : user.OpenId,
+                UserName = user == null ? string.Empty : user.UserName,
                 LikeFlavor = likeTaste == null ? "" : string.Join(",", likeTaste),
                 DisLikeFlavor = dislikeTaste == null ? "" : string.Join(",", dislikeTaste),
                 Dieteticrestraint = taboo == null ? "" : string.Join(",", taboo),
                 CreateTime = DateTime.Now
             });
-            Task.Factory.StartNew(() => { ddh.GetFactorScore(user.OpenId); });
+            ddh.GetFactorScore(user.OpenId);
             return Json("提交成功", JsonRequestBehavior.AllowGet);
         }
 
@@ -82,10 +80,6 @@ namespace DailyDish.Portal.Controllers
             DailyDishHelper ddh = new DailyDishHelper();
             UserInfo user = (UserInfo)Session["wechat"];
             DishesModel model = ddh.GetDishByUser(openId);
-
-            Task.Factory.StartNew(() => { ddh.UpdateDishScore(openId, model.Id); });
-            Task.Factory.StartNew(() => { ddh.SaveRecommendHistory(openId, model.Id, model.Score); });
-
             return View("ShowFoodInfo", model);
         }
     }

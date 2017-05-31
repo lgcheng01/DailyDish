@@ -7,6 +7,8 @@ using System.Web;
 using System.Configuration;
 using DailyDish.Portal.SQLDll;
 using DailyDish.Wechat.Interfaces;
+using System.Threading.Tasks;
+using DailyDish.Portal.Models;
 
 namespace DailyDish.Portal.Handler
 {
@@ -81,7 +83,9 @@ namespace DailyDish.Portal.Handler
             }
             else if (tm.Content.Contains("2"))
             {
-
+                DishesModel model = ddh.GetDishByUser(tm.FromUserName);
+                ddh.SaveRecommendHistory(tm.FromUserName, model.Id, model.Score, model.DishName);
+                ddh.UpdateDishScore(tm.FromUserName, model.Id);
                 tm.Content = "请点此链接查看你的专属推荐" + ConfigurationManager.AppSettings["RecommendUrl"] + tm.FromUserName; ;
             }
 
