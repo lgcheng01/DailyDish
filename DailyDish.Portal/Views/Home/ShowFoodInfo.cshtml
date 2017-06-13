@@ -1,17 +1,30 @@
 ﻿@model DailyDish.Portal.Models.DishesModel
 <div class="foodCantainer">
+    <div class="foodTitle">
+        <p>今日推荐：红烧鸡腿</p>
+    </div>
     <div class="img">
-        <img src="~/Content/images/QingJiao_JiDan.jpg" />
+        <img src="@Model.DishImage" />
     </div>
 
     <div class="foodContent">
-        <div class="foodTitle">
-            @Model.DishName
-            <div class="link">超链接：<a href="@Model.PracticeUrl">@Model.PracticeUrl</a></div>
-        </div>
-        <p>介绍：</p>
         <div class="instructions">
-           @Model.Explain
+            @Model.Explain
         </div>
     </div>
+    <div class="buttonBox buttonBox1">
+        <hr />
+        <button type="button" class="btn dislikeDishBtn" onclick="NavToWeb()">就吃它了</button>
+        <button type="button" class="btn" style="background-color:#FF8C00" onclick="@Url.Action("GetRecommendDish","Home", new { openId = ""} )">不想吃它</button>
+    </div>
 </div>
+
+<script>
+    function NavToWeb() {
+        location.href = '@Model.PracticeUrl';
+    }
+
+    function ChangeRecommandedDish() {
+        @*@Url.Action("~/Handler/TextHandler/DefaultHandler") + "?tm=" + "2";*@
+    }
+</script>
