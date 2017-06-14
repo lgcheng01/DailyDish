@@ -1,7 +1,7 @@
 ﻿@model DailyDish.Portal.Models.DishesModel
 <div class="foodCantainer">
     <div class="foodTitle">
-        <p>今日推荐：红烧鸡腿</p>
+        <p>今日推荐：@Model.DishName</p>
     </div>
     <div class="img">
         <img src="@Model.DishImage" />
@@ -15,7 +15,7 @@
     <div class="buttonBox buttonBox1">
         <hr />
         <button type="button" class="btn dislikeDishBtn" onclick="NavToWeb()">就吃它了</button>
-        <button type="button" class="btn" style="background-color:#FF8C00" onclick="@Url.Action("GetRecommendDish","Home", new { openId = ""} )">不想吃它</button>
+        <button type="button" class="btn" style="background-color:#FF8C00" onclick="ChangeRecommandedDish()">不想吃它</button>
     </div>
 </div>
 
@@ -25,6 +25,13 @@
     }
 
     function ChangeRecommandedDish() {
-        @*@Url.Action("~/Handler/TextHandler/DefaultHandler") + "?tm=" + "2";*@
+        $.ajax({
+            url: '/Home/GetRecommendDish',
+            type: 'POST',
+            dataType: 'application/json',
+            data: {
+                openId: null,
+            },
+        })
     }
 </script>

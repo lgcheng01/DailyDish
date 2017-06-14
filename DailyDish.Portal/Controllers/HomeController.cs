@@ -65,12 +65,17 @@ namespace DailyDish.Portal.Controllers
             ddh.GetFactorScore(user.OpenId);
             return Json("提交成功", JsonRequestBehavior.AllowGet);
         }
-
+        private static string userOpenId;
         public ActionResult GetRecommendDish(string openId)
         {
             DailyDishHelper ddh = new DailyDishHelper();
+            DishesModel model = new DishesModel();
             UserInfo user = (UserInfo)Session["wechat"];
-            DishesModel model = ddh.GetDishByUser(openId);
+            if (!string.IsNullOrEmpty(openId))
+            {
+                userOpenId = openId;
+            }
+            model = ddh.GetDishByUser(userOpenId);
             return View("ShowFoodInfo", model);
         }
     }
