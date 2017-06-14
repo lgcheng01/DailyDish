@@ -160,15 +160,16 @@ namespace DailyDish.Portal.SQLDll
             List<Dishes> list = sh.Query(strSql.ToString(), null).Tables[0].AsEnumerable().Select(r => new Dishes
             {
                 Id = r[0].ToString(),
-                DishName = r[1].ToString(),
-                FirstTaste = r[2].ToString(),
-                SecondTaste = r[3].ToString(),
-                Explain = r[4].ToString(),
-                MainIngredients = r[5].ToString(),
-                Accessory = r[6].ToString(),
-                PracticeUrl = r[7].ToString(),
-                Status = Int32.Parse(r[8].ToString()),
-                CreateTime = DateTime.Parse(r[9].ToString())
+                DishImage = r[1].ToString(),
+                DishName = r[2].ToString(),
+                FirstTaste = r[3].ToString(),
+                SecondTaste = r[4].ToString(),
+                Explain = r[5].ToString(),
+                MainIngredients = r[6].ToString(),
+                Accessory = r[7].ToString(),
+                PracticeUrl = r[8].ToString(),
+                Status = Int32.Parse(r[9].ToString()),
+                CreateTime = DateTime.Parse(r[10].ToString())
             }).ToList<Dishes>();
             return list;
         }
@@ -184,15 +185,16 @@ namespace DailyDish.Portal.SQLDll
             Dishes list = sh.Query(strSql.ToString(), parameters).Tables[0].AsEnumerable().Select(r => new Dishes
             {
                 Id = r[0].ToString(),
-                DishName = r[1].ToString(),
-                FirstTaste = r[2].ToString(),
-                SecondTaste = r[3].ToString(),
-                Explain = r[4].ToString(),
-                MainIngredients = r[5].ToString(),
-                Accessory = r[6].ToString(),
-                PracticeUrl = r[7].ToString(),
-                Status = Int32.Parse(r[8].ToString()),
-                CreateTime = DateTime.Parse(r[9].ToString())
+                DishImage = r[1].ToString(),
+                DishName = r[2].ToString(),
+                FirstTaste = r[3].ToString(),
+                SecondTaste = r[4].ToString(),
+                Explain = r[5].ToString(),
+                MainIngredients = r[6].ToString(),
+                Accessory = r[7].ToString(),
+                PracticeUrl = r[8].ToString(),
+                Status = Int32.Parse(r[9].ToString()),
+                CreateTime = DateTime.Parse(r[10].ToString())
             }).ToList<Dishes>()[0];
             return list;
         }
@@ -440,6 +442,7 @@ namespace DailyDish.Portal.SQLDll
         DishesModel model = new DishesModel()
         {
             Id = dishscore.DishesId,
+            DishImage = dish.DishImage,
             SecondTaste = dish.SecondTaste,
             Status = dish.Status,
             Accessory = dish.Accessory,
