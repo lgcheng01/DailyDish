@@ -168,6 +168,21 @@ body {
         text-overflow: ellipsis;
     }
 
+dislikeDishBtn {
+    background-color: aquamarine;
+}
+
+likeDishBtn {
+    background-color: #FF8C00;
+}
+
+.btnTopLine {
+    outline: none;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+}
 
 .instructions {
     width: 90%;

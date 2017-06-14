@@ -85,6 +85,12 @@ namespace DailyDish.Portal.SQLDll
             return ret;
         }
 
+        public int SaveUserFeedBack()
+        {
+            int ret = 0;
+            return ret;
+        }
+
         public List<Flavor> QueryFlavor()
         {
             SQLiteHelper sh = new SQLiteHelper();
@@ -120,11 +126,12 @@ namespace DailyDish.Portal.SQLDll
             SQLiteHelper sh = new SQLiteHelper();
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into Dishes(");
-            strSql.Append("Id,DishName,FirstTaste,SecondTaste,Explain,MainIngredients,Accessory,PracticeUrl,Status,CreateTime)");
+            strSql.Append("Id,DishImage,DishName,FirstTaste,SecondTaste,Explain,MainIngredients,Accessory,PracticeUrl,Status,CreateTime)");
             strSql.Append(" values (");
-            strSql.Append("@Id,@DishName,@FirstTaste,@SecondTaste,@Explain,@MainIngredients,@Accessory,@PracticeUrl,@Status,@CreateTime)");
+            strSql.Append("@Id,@DishImage,@DishName,@FirstTaste,@SecondTaste,@Explain,@MainIngredients,@Accessory,@PracticeUrl,@Status,@CreateTime)");
             SQLiteParameter[] parameters = {
                     sh.MakeSQLiteParameter("@Id", DbType.String,dishes.Id),
+                    sh.MakeSQLiteParameter("@DishImage", DbType.String,dishes.DishImage),
                     sh.MakeSQLiteParameter("@DishName", DbType.String,dishes.DishName),
                     sh.MakeSQLiteParameter("@FirstTaste", DbType.String,dishes.FirstTaste),
                     sh.MakeSQLiteParameter("@SecondTaste", DbType.String,dishes.SecondTaste),
